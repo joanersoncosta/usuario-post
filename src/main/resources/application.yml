@@ -1,3 +1,10 @@
 server:
   servlet:
     context-path: /usuario-post/api
+
+spring:    
+  data:
+    mongodb:
+      authentication-database: admin
+      uri: ${MONGO_DB_URI:mongodb+srv://wakandadev:ZwtTqntmqxPS5kyX@wakandadev.cjsar7m.mongodb.net/usuario-postDB?retryWrites=true&w=majority}
+      auto-index-creation: true
