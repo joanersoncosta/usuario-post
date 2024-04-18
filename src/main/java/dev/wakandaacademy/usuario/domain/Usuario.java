@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.http.HttpStatus;
 
 import dev.wakandaacademy.handler.APIException;
+import dev.wakandaacademy.usuario.application.api.request.UsuarioNovoRequest;
 import dev.wakandaacademy.usuario.domain.enuns.Sexo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Document(collection = "Usuario")
 public class Usuario {
-	
+
 	@Id
 	private UUID idUsuario;
 	@NotBlank
@@ -46,12 +47,12 @@ public class Usuario {
 	private LocalDateTime dataCadastro;
 	private LocalDateTime dataHoraDaUltimaAlteracao;
 
-	public Usuario(String nome, String cpf, String email, String sexo) {
+	public Usuario(UsuarioNovoRequest request) {
 		this.idUsuario = UUID.randomUUID();
-		this.nome = nome;
-		this.cpf = cpf;
-		this.email = email;
-		this.sexo = retornaSexoValido(sexo);
+		this.nome = request.nome();
+		this.cpf = request.cpf();
+		this.email = request.email();
+		this.sexo = retornaSexoValido(request.sexo());
 		this.dataCadastro = LocalDateTime.now();
 	}
 
