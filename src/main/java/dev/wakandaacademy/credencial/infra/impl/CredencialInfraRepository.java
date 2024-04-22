@@ -27,5 +27,15 @@ public class CredencialInfraRepository implements CredencialRepository {
 		}	
 		log.info("[finish] CredencialRepositoryMongoDB - salva");
 	}
+	
+	@Override
+	public Credencial buscaCredencialPorUsuario(String usuario) {
+		log.info("[start] CredencialRepositoryMongoDB - buscaCredencialPorUsuario");
+		var credencial = credencialMongoRepository.findByUsuario(usuario)
+				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Usuário não encontrado para esta credencial."));
+		log.info("[finish] CredencialRepositoryMongoDB - buscaCredencialPorUsuario");
+		return credencial;
+
+	}
 
 }

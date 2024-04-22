@@ -27,5 +27,5 @@ public class UsuarioApplicationsService implements UsuarioService {
 		log.info("[finaliza] UsuarioApplicationsService - cadastraNovoUsuario");
 		return UsuarioIdResponse.builder().idUsuario(usuario.getIdUsuario()).build();
 	}
-
+	
 }
