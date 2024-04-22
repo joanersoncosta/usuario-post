@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.usuario.application.api.request.UsuarioNovoRequest;
 import dev.wakandaacademy.usuario.application.api.response.UsuarioIdResponse;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/v1/usuario")
@@ -18,7 +19,7 @@ public interface UsuarioAPI {
 	
 	@PostMapping(path = "/public/cadastro")
 	@ResponseStatus(code = HttpStatus.CREATED)
-//	@Operation(summary = "Cria um usuario")
+	@Operation(summary = "Cria um usuario")
 	UsuarioIdResponse cadastraNovoUsuario(@RequestBody @Valid UsuarioNovoRequest usuarioRequest);
 
 }
