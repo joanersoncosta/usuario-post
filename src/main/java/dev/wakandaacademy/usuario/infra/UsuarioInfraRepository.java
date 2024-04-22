@@ -1,5 +1,8 @@
 package dev.wakandaacademy.usuario.infra;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -25,6 +28,15 @@ public class UsuarioInfraRepository implements UsuarioRepository {
 			throw APIException.build(HttpStatus.BAD_REQUEST, "Usúario já cadastrado.");
 		}
 		log.info("[finish] UsuarioInfraRepository - salva");
+		return usuario;
+	}
+	
+	@Override
+	public Usuario buscaUsuarioPorId(UUID idUsuario) {
+		log.info("[inicia] UsuarioInfraRepository - buscaUsuarioPorId");
+		Usuario usuario = usuarioSpringDBMongoRepository.findById(idUsuario)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Usúario não encontrado!"));
+		log.info("[finaliza] UsuarioInfraRepository - buscaUsuarioPorId");
 		return usuario;
 	}
 
