@@ -10,4 +10,6 @@ public interface UsuarioRepository {
 	
 	Usuario buscaUsuarioPorId(UUID idUsuario);
 	
+	Usuario buscaUsuarioPorEmail(String email);
+
 }
