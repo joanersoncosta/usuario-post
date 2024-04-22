@@ -10,7 +10,7 @@ import dev.wakandaacademy.usuario.application.api.request.UsuarioNovoRequest;
 import lombok.Getter;
 
 @Getter
-public class CredencialCliente {
+public class CredencialUsuario {
 	@NotBlank
 	@Email
 	private String email;
@@ -18,7 +18,7 @@ public class CredencialCliente {
 	private String senha;
 	private Perfil perfil;
 	
-	public CredencialCliente(UsuarioNovoRequest usuario) {
+	public CredencialUsuario(UsuarioNovoRequest usuario) {
 		this.email = usuario.email();
 		this.senha = usuario.senha();
 		this.perfil = new Perfil(TipoPerfil.USUARIO.name());
