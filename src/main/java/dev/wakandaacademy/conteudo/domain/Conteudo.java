@@ -9,9 +9,12 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
 
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
+import dev.wakandaacademy.conteudo.domain.enuns.CategoriaConteudo;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
+import dev.wakandaacademy.handler.APIException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +36,8 @@ public class Conteudo {
 	@NotBlank(message = "Campo descricao não pode está vazio.")
 	@Size(min = 3, max = 250)
 	private String descricao;
+	@NotBlank(message = "Campo categoria não pode estar vazio.")
+	private CategoriaConteudo categoria;
 	private StatusRestritoConteudo status;
 	private LocalDateTime dataDaCriacao;
 	private LocalDateTime dataDaUltimaAlteracao;
@@ -41,8 +46,13 @@ public class Conteudo {
 		this.idConteudo = UUID.randomUUID();
 		this.idUsuario = conteudoRequest.idUsuario();
 		this.descricao = conteudoRequest.descricao();
+		this.categoria = retornaCategoria(conteudoRequest.categoria());
 		this.status = StatusRestritoConteudo.INAVITO;
 		this.dataDaCriacao = LocalDateTime.now();
 	}
 
+	private CategoriaConteudo retornaCategoria(String categoria) {
+		return CategoriaConteudo.validaCategoria(categoria)
+	            .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Categória não encontrada."));
+	}
 }
