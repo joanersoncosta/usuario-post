@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.wakandaacademy.config.security.service.TokenService;
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
+import dev.wakandaacademy.conteudo.application.service.ConteudoService;
 import dev.wakandaacademy.handler.APIException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -14,14 +15,16 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Log4j2
 public class ConteudoRestController implements ConteudoAPI {
-
+	private final ConteudoService conteudoService;
 	private final TokenService tokenService;
 
 	@Override
 	public ConteudoIdResponse criaConteudo(String token, ConteudoRequest ConteudoRequest) {
 		log.info("[inicia] ConteudoRestController - criaConteudo");
+		String email = getUsuarioByToken(token);
+		ConteudoIdResponse conteudoIdResponse = conteudoService.criaConteudo(email, ConteudoRequest);
 		log.info("[finaliza] ConteudoRestController - criaConteudo");
-		return null;
+		return conteudoIdResponse;
 	}
 	
 	private String getUsuarioByToken(String token) {
