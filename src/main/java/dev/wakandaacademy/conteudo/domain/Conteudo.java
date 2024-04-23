@@ -39,6 +39,7 @@ public class Conteudo {
 	@NotBlank(message = "Campo categoria não pode estar vazio.")
 	private CategoriaConteudo categoria;
 	private StatusRestritoConteudo status;
+	private int quantidadePostagem;
 	private LocalDateTime dataDaCriacao;
 	private LocalDateTime dataDaUltimaAlteracao;
 
@@ -47,6 +48,7 @@ public class Conteudo {
 		this.idUsuario = conteudoRequest.idUsuario();
 		this.descricao = conteudoRequest.descricao();
 		this.categoria = retornaCategoria(conteudoRequest.categoria());
+		this.quantidadePostagem = 0;
 		this.status = StatusRestritoConteudo.INAVITO;
 		this.dataDaCriacao = LocalDateTime.now();
 	}
@@ -54,5 +56,13 @@ public class Conteudo {
 	private CategoriaConteudo retornaCategoria(String categoria) {
 		return CategoriaConteudo.validaCategoria(categoria)
 	            .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Categória não encontrada."));
+	}
+	
+	public void incrementaQuantidadePostagem() {
+		this.quantidadePostagem ++;
+	}
+	
+	public void reduzQuantidadePostagem() {
+		this.quantidadePostagem --;
 	}
 }
