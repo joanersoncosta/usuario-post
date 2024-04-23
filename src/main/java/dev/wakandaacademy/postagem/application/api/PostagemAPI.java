@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
-@RequestMapping("/v1/Postagem")
+@RequestMapping("/v1/postagem")
 public interface PostagemAPI {
 
 	@PostMapping(value = "/cria-post")
