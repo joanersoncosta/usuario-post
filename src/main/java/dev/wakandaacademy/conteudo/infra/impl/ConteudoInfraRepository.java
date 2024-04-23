@@ -1,5 +1,8 @@
 package dev.wakandaacademy.conteudo.infra.impl;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.stereotype.Repository;
 
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
@@ -20,6 +23,13 @@ public class ConteudoInfraRepository implements ConteudoRepository {
 		conteudoSpringDBMongoRepository.save(conteudo);
 		log.info("[finish] ConteudoInfraRepository - salva");
 		return conteudo;
+	}
+
+	@Override
+	public Optional<Conteudo> buscaConteudoPorId(UUID idUsuario) {
+		log.info("[start] ConteudoInfraRepository - buscaConteudoPorId");
+		log.info("[finish] ConteudoInfraRepository - buscaConteudoPorId");
+		return Optional.empty();
 	}
 
 }

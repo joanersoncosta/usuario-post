@@ -20,4 +20,8 @@ public class ConteudoResponse {
 		this.data = conteudo.getDataDaCriacao();
 	}
 
+	public static ConteudoResponse converte(Conteudo conteudo) {
+		return new ConteudoResponse(conteudo);
+	}
+
 }

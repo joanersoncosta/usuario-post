@@ -2,6 +2,7 @@ package dev.wakandaacademy.conteudo.application.service.impl;
 
 import java.util.UUID;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
@@ -10,6 +11,7 @@ import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.application.service.ConteudoService;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
+import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.usuario.application.repository.UsuarioRepository;
 import dev.wakandaacademy.usuario.domain.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -37,8 +39,14 @@ public class ConteudoApplicationService implements ConteudoService {
 	@Override
 	public ConteudoResponse buscaConteudoPorId(String email, UUID idConteudo) {
 		log.info("[inicia] ConteudoApplicationService - buscaConteudoPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Usuario usuario = usuarioRepository.buscaUsuarioPorId(idConteudo);
+		usuario.pertenceAoUsuario(usuarioEmail);
+		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(usuario.getIdUsuario())
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
 		log.info("[finaliza] ConteudoApplicationService - buscaConteudoPorId");
-		return null;
+		return ConteudoResponse.converte(conteudo);
 	}
 
 }
