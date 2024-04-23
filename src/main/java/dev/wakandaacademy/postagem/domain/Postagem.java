@@ -33,10 +33,6 @@ public class Postagem {
 	@Indexed
 	private UUID idUsuario;
 	private String publicador;
-	private LocalDateTime dataPostagem;
-	@NotBlank
-	@Size
-	private String titlo;
 	@NotBlank
 	@Size
 	private String descricao;
