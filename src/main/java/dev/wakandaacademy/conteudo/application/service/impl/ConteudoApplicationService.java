@@ -63,4 +63,14 @@ public class ConteudoApplicationService implements ConteudoService {
 		return ConteudoResponse.converte(conteudos);
 	}
 
+	@Override
+	public List<ConteudoResponse> buscaTodosOsConteudosDoUsuario(String email, UUID idUsuario) {
+		log.info("[inicia] ConteudoApplicationService - buscaTodosOsConteudosDoUsuario");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		List<Conteudo> conteudos = conteudoRepository.buscaTodosOsConteudosDoUsuario(idUsuario);
+		log.info("[finaliza] ConteudoApplicationService - buscaTodosOsConteudosDoUsuario");
+		return ConteudoResponse.converte(conteudos);
+	}
+
 }

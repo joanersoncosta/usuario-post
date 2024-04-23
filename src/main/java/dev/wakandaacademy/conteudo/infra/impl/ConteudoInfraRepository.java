@@ -50,4 +50,16 @@ public class ConteudoInfraRepository implements ConteudoRepository {
 		return conteudos;
 	}
 
+	@Override
+	public List<Conteudo> buscaTodosOsConteudosDoUsuario(UUID idUsuario) {
+		log.info("[start] ConteudoInfraRepository - buscaConteudoPorId");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idUsuario").is(idUsuario)
+				.and("status").is(StatusRestritoConteudo.INAVITO));
+		
+		List<Conteudo> conteudos = mongoTemplate.find(query, Conteudo.class);
+		log.info("[finish] ConteudoInfraRepository - buscaConteudoPorId");
+		return conteudos;
+	}
+
 }

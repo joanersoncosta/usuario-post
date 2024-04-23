@@ -60,5 +60,15 @@ public class ConteudoRestController implements ConteudoAPI {
 		return conteudoResponse;
 	}
 
+	@Override
+	public List<ConteudoResponse> buscaTodosOsConteudosDoUsuario(String token, UUID idUsuario) {
+		log.info("[inicia] ConteudoRestController - buscaTodosOsConteudosDoUsuario");
+		String email = getUsuarioByToken(token);
+		List<ConteudoResponse> conteudoResponse = conteudoService.buscaTodosOsConteudosDoUsuario(email, idUsuario);
+		log.info("[finaliza] ConteudoRestController - buscaTodosOsConteudosDoUsuario");
+		return conteudoResponse;
+
+	}
+
 
 }

@@ -40,4 +40,9 @@ public interface ConteudoAPI {
 	@Operation(summary = "Busca Todos os conteudos")
 	List<ConteudoResponse> buscaTodosOsConteudos(@RequestHeader(name = "Authorization", required = true) String token);
 
+	@GetMapping(value = "/usuario/{idUsuario}/busca-conteudo")
+	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary = "Busca Todos os conteudos")
+	List<ConteudoResponse> buscaTodosOsConteudosDoUsuario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idUsuario") UUID idUsuario);
+
 }

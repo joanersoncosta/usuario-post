@@ -15,4 +15,6 @@ public interface ConteudoService {
 
 	List<ConteudoResponse> buscaTodosOsConteudos(String email);
 
+	List<ConteudoResponse> buscaTodosOsConteudosDoUsuario(String email, UUID idUsuario);
+
 }

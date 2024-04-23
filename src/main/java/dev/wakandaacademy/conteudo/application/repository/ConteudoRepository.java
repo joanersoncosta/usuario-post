@@ -14,4 +14,6 @@ public interface ConteudoRepository {
 
 	List<Conteudo> buscaTodosOsConteudos();
 
+	List<Conteudo> buscaTodosOsConteudosDoUsuario(UUID idUsuario);
+
 }
