@@ -34,4 +34,11 @@ public class ConteudoApplicationService implements ConteudoService {
 		return ConteudoIdResponse.builder().idConteudo(conteudo.getIdConteudo()).build();
 	}
 
+	@Override
+	public ConteudoResponse buscaConteudoPorId(String email, UUID idConteudo) {
+		log.info("[inicia] ConteudoApplicationService - buscaConteudoPorId");
+		log.info("[finaliza] ConteudoApplicationService - buscaConteudoPorId");
+		return null;
+	}
+
 }
