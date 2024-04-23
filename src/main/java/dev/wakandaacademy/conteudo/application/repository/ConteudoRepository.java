@@ -16,4 +16,6 @@ public interface ConteudoRepository {
 
 	List<Conteudo> buscaTodosOsConteudosDoUsuario(UUID idUsuario);
 
+	void deletaConteudo(Conteudo conteudo);
+
 }

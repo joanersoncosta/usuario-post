@@ -78,5 +78,13 @@ public class ConteudoRestController implements ConteudoAPI {
 		log.info("[finaliza] ConteudoRestController - editaConteudoPorId");
 	}
 
+	@Override
+	public void deletaConteudoPorId(String token, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - deletaConteudoPorId");
+		String email = getUsuarioByToken(token);
+		conteudoService.deletaConteudoPorId(email, idConteudo);
+		log.info("[finaliza] ConteudoRestController - deletaConteudoPorId");
+	}
+
 
 }

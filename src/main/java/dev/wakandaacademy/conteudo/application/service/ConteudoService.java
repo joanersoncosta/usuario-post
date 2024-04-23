@@ -20,4 +20,6 @@ public interface ConteudoService {
 
 	void editaConteudoPorId(String email, UUID idConteudo, ConteudoAlteracaoRequest conteudoRequest);
 
+	void deletaConteudoPorId(String email, UUID idConteudo);
+
 }

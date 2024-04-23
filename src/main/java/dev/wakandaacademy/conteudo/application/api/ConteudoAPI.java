@@ -60,6 +60,14 @@ public interface ConteudoAPI {
 	@Operation(summary = "Edita conteudo por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void editaConteudoPorId(@RequestHeader(name = "Authorization", required = true) String token,
-			@PathVariable(value = "idConteudo") UUID idConteudo, @RequestBody @Valid ConteudoAlteracaoRequest ConteudoRequest);
+			@PathVariable(value = "idConteudo") UUID idConteudo,
+			@RequestBody @Valid ConteudoAlteracaoRequest ConteudoRequest);
+
+	@PatchMapping(value = "/{idConteudo}/deleta")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Deleta conteudo por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void deletaConteudoPorId(@RequestHeader(name = "Authorization", required = true) String token,
+			@PathVariable(value = "idConteudo") UUID idConteudo);
 
 }

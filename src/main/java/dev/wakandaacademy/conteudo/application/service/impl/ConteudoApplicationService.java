@@ -86,4 +86,16 @@ public class ConteudoApplicationService implements ConteudoService {
 		log.info("[finaliza] ConteudoApplicationService - editaConteudoPorId");
 	}
 
+	@Override
+	public void deletaConteudoPorId(String email, UUID idConteudo) {
+		log.info("[inicia] ConteudoApplicationService - deletaConteudoPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(idConteudo)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
+		conteudo.pertenceAoUsuario(usuarioEmail);
+		conteudoRepository.deletaConteudo(conteudo);
+		log.info("[finaliza] ConteudoApplicationService - deletaConteudoPorId");
+	}
+
 }
