@@ -28,8 +28,9 @@ public class ConteudoInfraRepository implements ConteudoRepository {
 	@Override
 	public Optional<Conteudo> buscaConteudoPorId(UUID idUsuario) {
 		log.info("[start] ConteudoInfraRepository - buscaConteudoPorId");
+		Optional<Conteudo> conteudo = conteudoSpringDBMongoRepository.findById(idUsuario);
 		log.info("[finish] ConteudoInfraRepository - buscaConteudoPorId");
-		return Optional.empty();
+		return conteudo;
 	}
 
 }

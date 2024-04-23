@@ -11,6 +11,7 @@ import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.application.service.ConteudoService;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.usuario.application.repository.UsuarioRepository;
 import dev.wakandaacademy.usuario.domain.Usuario;
@@ -45,6 +46,9 @@ public class ConteudoApplicationService implements ConteudoService {
 		usuario.pertenceAoUsuario(usuarioEmail);
 		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(usuario.getIdUsuario())
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
+		if(conteudo.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
+			throw APIException.build(HttpStatus.FORBIDDEN, "Conteúdo sensível não disponível");
+		}
 		log.info("[finaliza] ConteudoApplicationService - buscaConteudoPorId");
 		return ConteudoResponse.converte(conteudo);
 	}
