@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusConteudo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,12 @@ public class Conteudo {
 	@Size(min = 3, max = 250)
 	private String descricao;
 	private StatusConteudo status;
+
+	public Conteudo(ConteudoRequest conteudoRequest) {
+		this.idConteudo = UUID.randomUUID();
+		this.idUsuario = conteudoRequest.idUsuario();
+		this.descricao = conteudoRequest.descricao();
+		this.status = StatusConteudo.INAVITO;
+	}
 
 }
