@@ -1,11 +1,15 @@
-package dev.wakandaacademy.conteudo.application.api;
+package dev.wakandaacademy.conteudo.application.api.impl;
+
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.config.security.service.TokenService;
+import dev.wakandaacademy.conteudo.application.api.ConteudoAPI;
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
+import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
 import dev.wakandaacademy.conteudo.application.service.ConteudoService;
 import dev.wakandaacademy.handler.APIException;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +39,13 @@ public class ConteudoRestController implements ConteudoAPI {
 		log.info("[emailUsuario] {}", emailUsuario);
 		log.info("[finaliza] ChamadoRestController - getUsuarioByToken");
 		return emailUsuario;
+	}
+
+	@Override
+	public ConteudoResponse buscaConteudoPorId(String token, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - buscaConteudoPorId");
+		log.info("[finaliza] ConteudoRestController - buscaConteudoPorId");
+		return null;
 	}
 
 

@@ -1,5 +1,6 @@
 package dev.wakandaacademy.conteudo.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
@@ -10,7 +11,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
-import dev.wakandaacademy.conteudo.domain.enuns.StatusConteudo;
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,13 +33,16 @@ public class Conteudo {
 	@NotBlank(message = "Campo descricao não pode está vazio.")
 	@Size(min = 3, max = 250)
 	private String descricao;
-	private StatusConteudo status;
+	private StatusRestritoConteudo status;
+	private LocalDateTime dataDaCriacao;
+	private LocalDateTime dataDaUltimaAlteracao;
 
 	public Conteudo(ConteudoRequest conteudoRequest) {
 		this.idConteudo = UUID.randomUUID();
 		this.idUsuario = conteudoRequest.idUsuario();
 		this.descricao = conteudoRequest.descricao();
-		this.status = StatusConteudo.INAVITO;
+		this.status = StatusRestritoConteudo.INAVITO;
+		this.dataDaCriacao = LocalDateTime.now();
 	}
 
 }

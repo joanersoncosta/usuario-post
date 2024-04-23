@@ -1,5 +1,5 @@
 package dev.wakandaacademy.conteudo.domain.enuns;
 
-public enum StatusConteudo {
+public enum StatusRestritoConteudo {
 	ATIVO, INAVITO
 }

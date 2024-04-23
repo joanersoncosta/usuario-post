@@ -1,9 +1,12 @@
 package dev.wakandaacademy.conteudo.application.service.impl;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
+import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.application.service.ConteudoService;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
