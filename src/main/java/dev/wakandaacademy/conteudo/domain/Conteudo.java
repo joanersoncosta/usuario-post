@@ -26,8 +26,9 @@ public class Conteudo {
 	@Id
 	private UUID idConteudo;
 	@Indexed
+	@NotBlank(message = "Campo idUsuario não pode está vazio.")
 	private UUID idUsuario;
-	@NotBlank(message = "Campo descricao não pode estar vazio.")
+	@NotBlank(message = "Campo descricao não pode está vazio.")
 	@Size(min = 3, max = 250)
 	private String descricao;
 	private StatusConteudo status;
