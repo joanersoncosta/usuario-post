@@ -1,7 +1,9 @@
 package dev.wakandaacademy.conteudo.application.api.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import dev.wakandaacademy.conteudo.domain.Conteudo;
 import lombok.Value;
@@ -22,6 +24,12 @@ public class ConteudoResponse {
 
 	public static ConteudoResponse converte(Conteudo conteudo) {
 		return new ConteudoResponse(conteudo);
+	}
+	
+	public static List<ConteudoResponse> converte(List<Conteudo> conteudos) {
+		return conteudos.stream()
+				.map(ConteudoResponse::new)
+				.collect(Collectors.toList());
 	}
 
 }

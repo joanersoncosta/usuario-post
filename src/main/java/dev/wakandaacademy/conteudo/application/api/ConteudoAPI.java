@@ -1,5 +1,6 @@
 package dev.wakandaacademy.conteudo.application.api;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -33,5 +34,10 @@ public interface ConteudoAPI {
 	@ResponseStatus(code = HttpStatus.OK)
 	@Operation(summary = "Busca conteudo por ID")
 	ConteudoResponse buscaConteudoPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@GetMapping(value = "/busca-conteudo")
+	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary = "Busca Todos os conteudos")
+	List<ConteudoResponse> buscaTodosOsConteudos(@RequestHeader(name = "Authorization", required = true) String token);
 
 }

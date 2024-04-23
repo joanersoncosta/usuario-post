@@ -1,5 +1,6 @@
 package dev.wakandaacademy.conteudo.application.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,6 @@ public class ConteudoApplicationService implements ConteudoService {
 		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
 		log.info("[usuarioEmail], ", usuarioEmail);
 		Usuario usuario = usuarioRepository.buscaUsuarioPorId(idConteudo);
-		usuario.pertenceAoUsuario(usuarioEmail);
 		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(usuario.getIdUsuario())
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
 		if(conteudo.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
@@ -51,6 +51,16 @@ public class ConteudoApplicationService implements ConteudoService {
 		}
 		log.info("[finaliza] ConteudoApplicationService - buscaConteudoPorId");
 		return ConteudoResponse.converte(conteudo);
+	}
+
+	@Override
+	public List<ConteudoResponse> buscaTodosOsConteudos(String email) {
+		log.info("[inicia] ConteudoApplicationService - buscaTodosOsConteudos");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		List<Conteudo> conteudos = conteudoRepository.buscaTodosOsConteudos();
+		log.info("[finaliza] ConteudoApplicationService - buscaTodosOsConteudos");
+		return ConteudoResponse.converte(conteudos);
 	}
 
 }

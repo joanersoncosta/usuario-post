@@ -1,5 +1,6 @@
 package dev.wakandaacademy.conteudo.application.api.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,16 @@ public class ConteudoRestController implements ConteudoAPI {
 		String email = getUsuarioByToken(token);
 		ConteudoResponse conteudoResponse = conteudoService.buscaConteudoPorId(email, idConteudo);
 		log.info("[finaliza] ConteudoRestController - buscaConteudoPorId");
-		return null;
+		return conteudoResponse;
+	}
+
+	@Override
+	public List<ConteudoResponse> buscaTodosOsConteudos(String token) {
+		log.info("[inicia] ConteudoRestController - buscaTodosOsConteudos");
+		String email = getUsuarioByToken(token);
+		List<ConteudoResponse> conteudoResponse = conteudoService.buscaTodosOsConteudos(email);
+		log.info("[finaliza] ConteudoRestController - buscaTodosOsConteudos");
+		return conteudoResponse;
 	}
 
 
