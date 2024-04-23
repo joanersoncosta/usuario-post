@@ -34,6 +34,8 @@ public class Usuario {
 	@NotBlank
 	private String nome;
 	@NotBlank
+	private String userName;
+	@NotBlank
 	@Indexed(unique = true)
 	@Size(min = 11, max = 11, message = "número do registro de contribuinte individual brasileiro (CPF) inválido")
 //	@CPF
@@ -50,6 +52,7 @@ public class Usuario {
 	public Usuario(UsuarioNovoRequest request) {
 		this.idUsuario = UUID.randomUUID();
 		this.nome = request.nome();
+		this.userName = request.userName();
 		this.cpf = request.cpf();
 		this.email = request.email();
 		this.sexo = retornaSexoValido(request.sexo());

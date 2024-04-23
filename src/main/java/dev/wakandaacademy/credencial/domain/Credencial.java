@@ -1,18 +1,16 @@
 package dev.wakandaacademy.credencial.domain;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.UUID;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -28,8 +26,8 @@ import lombok.NoArgsConstructor;
 @Document(collection = "Credencial")
 public class Credencial implements UserDetails {
 
-	@MongoId(targetType = FieldType.STRING)
-	private String idCredencial;
+	@Id
+	private UUID idCredencial;
 	@Getter
 	@Email
 	@Indexed(unique = true)
@@ -46,6 +44,7 @@ public class Credencial implements UserDetails {
 	private boolean validado;
 
 	public Credencial(String usuario, String senha, Perfil perfil) {
+		this.idCredencial = UUID.randomUUID();
 		this.usuario = usuario;
 		var encriptador = new BCryptPasswordEncoder();
 		this.senha = encriptador.encode(senha);
@@ -64,7 +63,7 @@ public class Credencial implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
+		return null;
 	}
 
 	@Override

@@ -13,6 +13,9 @@ public record UsuarioNovoRequest(
 		@NotBlank(message = "Campo nome não pode está vazio.")
 		@Schema(description = "Este é o nome do Cliente", example = "Maria dos Santos")
 		String nome,
+		@NotBlank(message = "Campo userName não pode está vazio.")
+		@Schema(description = "Este é o userName do Cliente", example = "maria_santos")
+		String userName,
 		@NotBlank(message = "Campo cpf não pode está vazio.")
 		@Indexed(unique = true)
 		@Size(min = 11, max = 11, message = "número do registro de contribuinte individual brasileiro (CPF) inválido")

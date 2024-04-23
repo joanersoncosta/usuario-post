@@ -6,9 +6,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import dev.wakandaacademy.conteudo.domain.Conteudo;
-import lombok.Value;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Value
+@Getter
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class ConteudoResponse {
 	private UUID idConteudo;
 	private UUID idUsuario;

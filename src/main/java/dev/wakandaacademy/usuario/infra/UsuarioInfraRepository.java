@@ -1,6 +1,5 @@
 package dev.wakandaacademy.usuario.infra;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.dao.DataIntegrityViolationException;
