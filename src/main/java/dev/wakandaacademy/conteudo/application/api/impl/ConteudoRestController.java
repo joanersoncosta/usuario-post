@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.config.security.service.TokenService;
 import dev.wakandaacademy.conteudo.application.api.ConteudoAPI;
+import dev.wakandaacademy.conteudo.application.api.request.ConteudoAlteracaoRequest;
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
@@ -67,7 +68,14 @@ public class ConteudoRestController implements ConteudoAPI {
 		List<ConteudoResponse> conteudoResponse = conteudoService.buscaTodosOsConteudosDoUsuario(email, idUsuario);
 		log.info("[finaliza] ConteudoRestController - buscaTodosOsConteudosDoUsuario");
 		return conteudoResponse;
+	}
 
+	@Override
+	public void editaConteudoPorId(String token, UUID idConteudo, ConteudoAlteracaoRequest ConteudoRequest) {
+		log.info("[inicia] ConteudoRestController - editaConteudoPorId");
+		String email = getUsuarioByToken(token);
+		conteudoService.editaConteudoPorId(email, idConteudo, ConteudoRequest);
+		log.info("[finaliza] ConteudoRestController - editaConteudoPorId");
 	}
 
 

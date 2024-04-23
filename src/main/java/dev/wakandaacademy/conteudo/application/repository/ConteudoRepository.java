@@ -10,7 +10,7 @@ public interface ConteudoRepository {
 
 	Conteudo salva(Conteudo conteudo);
 
-	Optional<Conteudo> buscaConteudoPorId(UUID idUsuario);
+	Optional<Conteudo> buscaConteudoPorId(UUID idConteudo);
 
 	List<Conteudo> buscaTodosOsConteudos();
 

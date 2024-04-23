@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import dev.wakandaacademy.conteudo.application.api.request.ConteudoAlteracaoRequest;
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
 import dev.wakandaacademy.conteudo.application.api.response.ConteudoResponse;
@@ -43,8 +44,7 @@ public class ConteudoApplicationService implements ConteudoService {
 		log.info("[inicia] ConteudoApplicationService - buscaConteudoPorId");
 		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
 		log.info("[usuarioEmail], ", usuarioEmail);
-		Usuario usuario = usuarioRepository.buscaUsuarioPorId(idConteudo);
-		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(usuario.getIdUsuario())
+		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(idConteudo)
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
 		if(conteudo.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
 			throw APIException.build(HttpStatus.FORBIDDEN, "Conteúdo sensível não disponível");
@@ -71,6 +71,19 @@ public class ConteudoApplicationService implements ConteudoService {
 		List<Conteudo> conteudos = conteudoRepository.buscaTodosOsConteudosDoUsuario(idUsuario);
 		log.info("[finaliza] ConteudoApplicationService - buscaTodosOsConteudosDoUsuario");
 		return ConteudoResponse.converte(conteudos);
+	}
+
+	@Override
+	public void editaConteudoPorId(String email, UUID idConteudo, ConteudoAlteracaoRequest conteudoRequest) {
+		log.info("[inicia] ConteudoApplicationService - editaConteudoPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(idConteudo)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
+		conteudo.pertenceAoUsuario(usuarioEmail);
+		conteudo.editaConteudo(conteudoRequest);
+		conteudoRepository.salva(conteudo);
+		log.info("[finaliza] ConteudoApplicationService - editaConteudoPorId");
 	}
 
 }

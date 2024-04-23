@@ -11,10 +11,12 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.http.HttpStatus;
 
+import dev.wakandaacademy.conteudo.application.api.request.ConteudoAlteracaoRequest;
 import dev.wakandaacademy.conteudo.application.api.request.ConteudoRequest;
 import dev.wakandaacademy.conteudo.domain.enuns.CategoriaConteudo;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
+import dev.wakandaacademy.usuario.domain.Usuario;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,5 +66,15 @@ public class Conteudo {
 	
 	public void reduzQuantidadePostagem() {
 		this.quantidadePostagem --;
+	}
+
+	public void pertenceAoUsuario(Usuario usuarioEmail) {
+		if (!this.idUsuario.equals(usuarioEmail.getIdUsuario())) {
+			throw APIException.build(HttpStatus.UNAUTHORIZED, "Usuário não autorizado.");
+		}		
+	}
+
+	public void editaConteudo(ConteudoAlteracaoRequest conteudoRequest) {
+		this.descricao = conteudoRequest.descricao();
 	}
 }
