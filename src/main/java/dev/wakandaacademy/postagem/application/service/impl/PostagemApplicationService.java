@@ -1,13 +1,17 @@
 package dev.wakandaacademy.postagem.application.service.impl;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
+import dev.wakandaacademy.postagem.application.api.response.PostagemResponse;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.application.service.PostagemService;
 import dev.wakandaacademy.postagem.domain.Postagem;
@@ -38,4 +42,36 @@ public class PostagemApplicationService implements PostagemService {
 		return PostagemIdResponse.builder().idPostagem(postagem.getIdPostagem()).build();
 	}
 
+	@Override
+	public PostagemResponse buscaPostPorId(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - buscaPostPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		if(post.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
+			throw APIException.build(HttpStatus.FORBIDDEN, "Post sensível não disponível!");
+		}
+		log.info("[finaliza] PostagemApplicationService - buscaPostPorId");
+		return PostagemResponse.converte(post);
+	}
+	
+	private Postagem detalhaPost(UUID idPostagem) {
+		log.info("[inicia] PostagemApplicationService - detalhaPost");
+		Postagem post = postagemRepository.buscaPostPodId(idPostagem)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Post não encontrado!"));
+		log.info("[finaliza] PostagemApplicationService - detalhaPost");
+		return post;
+	}
+
+	private Conteudo detalhaConteudo(UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - detalhaConteudo");
+		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(idConteudo)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
+		log.info("[finaliza] PostagemApplicationService - detalhaConteudo");
+		return conteudo;
+	}
+	
 }

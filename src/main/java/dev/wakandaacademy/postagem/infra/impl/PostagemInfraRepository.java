@@ -1,5 +1,8 @@
 package dev.wakandaacademy.postagem.infra.impl;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.stereotype.Repository;
 
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
@@ -20,6 +23,14 @@ public class PostagemInfraRepository implements PostagemRepository {
 		postagemSpringDBMongoRepository.save(postagem);
 		log.info("[finish] PostagemInfraRepository - salva");
 		return postagem;
+	}
+
+	@Override
+	public Optional<Postagem> buscaPostPodId(UUID idPostagem) {
+		log.info("[start] PostagemInfraRepository - buscaPostPodId");
+		Optional<Postagem> post = postagemSpringDBMongoRepository.findById(idPostagem);
+		log.info("[finish] PostagemInfraRepository - buscaPostPodId");
+		return post;
 	}
 
 }

@@ -11,7 +11,11 @@ import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.http.HttpStatus;
 
+import dev.wakandaacademy.conteudo.domain.Conteudo;
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
+import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.domain.enuns.StatusAtivacaoPostagem;
 import dev.wakandaacademy.usuario.domain.Usuario;
@@ -39,6 +43,7 @@ public class Postagem {
 	@Size
 	private String descricao;
 	private StatusAtivacaoPostagem statusAtivacao;
+	private StatusRestritoConteudo status;
 	private int quantidadeComentarios;
 	private int like;
 	private int deslike;
@@ -46,13 +51,14 @@ public class Postagem {
 	private Set<PostagemUsuarioDeslike> deslikes;
 	private LocalDateTime dataDaCriacao;
 	private LocalDateTime dataDaUltimaAlteracao;
-	
+
 	public Postagem(PostagemRequest postagemRequest, Usuario usuario) {
 		this.idPostagem = UUID.randomUUID();
 		this.idConteudo = postagemRequest.idConteudo();
 		this.idPublicador = usuario.getIdUsuario();
 		this.descricao = postagemRequest.descricao();
 		this.statusAtivacao = StatusAtivacaoPostagem.INATIVO;
+		this.status = StatusRestritoConteudo.INAVITO;
 		this.quantidadeComentarios = 0;
 		this.like = 0;
 		this.deslike = 0;
@@ -60,5 +66,11 @@ public class Postagem {
 		this.deslikes = new HashSet<>();
 		this.dataDaCriacao = LocalDateTime.now();
 	}
-	
+
+	public void pertenceAoConteudo(Conteudo conteudo) {
+		if (idConteudo.equals(conteudo.getIdConteudo())) {
+			throw APIException.build(HttpStatus.BAD_REQUEST, "Post não pertence a este conteúdo.");
+		}
+	}
+
 }

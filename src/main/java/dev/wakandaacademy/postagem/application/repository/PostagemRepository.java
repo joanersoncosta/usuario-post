@@ -1,9 +1,14 @@
 package dev.wakandaacademy.postagem.application.repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import dev.wakandaacademy.postagem.domain.Postagem;
 
 public interface PostagemRepository {
 
 	Postagem salva(Postagem postagem);
+
+	Optional<Postagem> buscaPostPodId(UUID idPostagem);
 
 }

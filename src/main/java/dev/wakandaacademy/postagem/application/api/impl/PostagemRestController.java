@@ -1,14 +1,16 @@
 package dev.wakandaacademy.postagem.application.api.impl;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.config.security.service.TokenService;
-import dev.wakandaacademy.conteudo.application.api.response.ConteudoIdResponse;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.PostagemAPI;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
+import dev.wakandaacademy.postagem.application.api.response.PostagemResponse;
 import dev.wakandaacademy.postagem.application.service.PostagemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -37,5 +39,15 @@ public class PostagemRestController implements PostagemAPI {
 		log.info("[emailUsuario] {}", emailUsuario);
 		log.info("[finaliza] ChamadoRestController - getUsuarioByToken");
 		return emailUsuario;
+	}
+
+	@Override
+	public PostagemResponse buscaPostPorId(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - buscaPostPorId");
+		String email = getUsuarioByToken(token);
+		PostagemResponse postagemResponse = postagemService.buscaPostPorId(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - buscaPostPorId");
+		return postagemResponse;
+
 	}
 }
