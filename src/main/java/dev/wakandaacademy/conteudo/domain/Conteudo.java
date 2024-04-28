@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
@@ -33,7 +34,7 @@ public class Conteudo {
 	@Id
 	private UUID idConteudo;
 	@Indexed
-	@NotBlank(message = "Campo idUsuario não pode está vazio.")
+	@NotNull(message = "Campo idUsuario não pode ser nullo.") 
 	private UUID idUsuario;
 	@NotBlank(message = "Campo descricao não pode está vazio.")
 	@Size(min = 3, max = 250)
