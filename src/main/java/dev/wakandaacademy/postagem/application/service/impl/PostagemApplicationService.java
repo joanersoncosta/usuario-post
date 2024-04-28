@@ -1,5 +1,6 @@
 package dev.wakandaacademy.postagem.application.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
+import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemResponse;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.application.service.PostagemService;
@@ -37,7 +39,7 @@ public class PostagemApplicationService implements PostagemService {
 		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(postagemRequest.idConteudo())
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
 		conteudo.pertenceAoUsuario(usuario);
-		Postagem postagem  = postagemRepository.salva(new Postagem(postagemRequest, usuarioEmail));
+		Postagem postagem = postagemRepository.salva(new Postagem(postagemRequest, usuarioEmail));
 		log.info("[finaliza] PostagemApplicationService - criaPostagem");
 		return PostagemIdResponse.builder().idPostagem(postagem.getIdPostagem()).build();
 	}
@@ -51,13 +53,13 @@ public class PostagemApplicationService implements PostagemService {
 		Conteudo conteudo = detalhaConteudo(idConteudo);
 		Postagem post = detalhaPost(idPostagem);
 		post.pertenceAoConteudo(conteudo);
-		if(post.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
+		if (post.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
 			throw APIException.build(HttpStatus.FORBIDDEN, "Post sensível não disponível!");
 		}
 		log.info("[finaliza] PostagemApplicationService - buscaPostPorId");
 		return PostagemResponse.converte(post);
 	}
-	
+
 	private Postagem detalhaPost(UUID idPostagem) {
 		log.info("[inicia] PostagemApplicationService - detalhaPost");
 		Postagem post = postagemRepository.buscaPostPodId(idPostagem)
@@ -73,5 +75,20 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - detalhaConteudo");
 		return conteudo;
 	}
-	
+
+	@Override
+	public List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(String email, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - buscaTodosOsPostPorIdConteudo");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idConteudo]", idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		if (conteudo.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
+			throw APIException.build(HttpStatus.FORBIDDEN, "Conteúdo sensível não disponível!");
+		}
+		List<Postagem> posts = postagemRepository.buscaTodosOsPostPorIdConteudo(conteudo.getIdConteudo());
+		log.info("[finaliza] PostagemApplicationService - buscaTodosOsPostPorIdConteudo");
+		return PostagemListResponse.converte(posts);
+	}
+
 }

@@ -1,5 +1,6 @@
 package dev.wakandaacademy.postagem.application.api;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
+import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -32,8 +34,14 @@ public interface PostagemAPI {
 
 	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	@Operation(summary = "Cria post")
+	@Operation(summary = "Busca post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	PostagemResponse buscaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@PostMapping(value = "/conteudo/{idConteudo}/busca")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary = "Lista todos os posts por conteúdo")
+	@SecurityRequirement(name = "Bearer Authentication")
+	List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 }

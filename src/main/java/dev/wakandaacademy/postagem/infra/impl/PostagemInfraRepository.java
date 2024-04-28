@@ -1,10 +1,15 @@
 package dev.wakandaacademy.postagem.infra.impl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.domain.Postagem;
 import dev.wakandaacademy.postagem.infra.PostagemSpringDBMongoRepository;
@@ -16,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class PostagemInfraRepository implements PostagemRepository {
 	private final PostagemSpringDBMongoRepository postagemSpringDBMongoRepository;
+	private final MongoTemplate mongoTemplate;
 
 	@Override
 	public Postagem salva(Postagem postagem) {
@@ -31,6 +37,17 @@ public class PostagemInfraRepository implements PostagemRepository {
 		Optional<Postagem> post = postagemSpringDBMongoRepository.findById(idPostagem);
 		log.info("[finish] PostagemInfraRepository - buscaPostPodId");
 		return post;
+	}
+
+	@Override
+	public List<Postagem> buscaTodosOsPostPorIdConteudo(UUID idConteudo) {
+		log.info("[start] ConteudoInfraRepository - buscaConteudoPorId");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idConteudo").is(idConteudo).and("status").is(StatusRestritoConteudo.INAVITO));
+
+		List<Postagem> posts = mongoTemplate.find(query, Postagem.class);
+		log.info("[finish] ConteudoInfraRepository - buscaConteudoPorId");
+		return posts;
 	}
 
 }

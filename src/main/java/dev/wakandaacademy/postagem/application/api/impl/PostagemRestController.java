@@ -1,5 +1,6 @@
 package dev.wakandaacademy.postagem.application.api.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.PostagemAPI;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
+import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemResponse;
 import dev.wakandaacademy.postagem.application.service.PostagemService;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +50,15 @@ public class PostagemRestController implements PostagemAPI {
 		PostagemResponse postagemResponse = postagemService.buscaPostPorId(email, idPostagem, idConteudo);
 		log.info("[finaliza] ConteudoRestController - buscaPostPorId");
 		return postagemResponse;
-
 	}
+
+	@Override
+	public List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(String token, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
+		String email = getUsuarioByToken(token);
+		List<PostagemListResponse>  postagemListResponse = postagemService.buscaTodosOsPostPorIdConteudo(email, idConteudo);
+		log.info("[finaliza] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
+		return postagemListResponse;
+	}
+	
 }
