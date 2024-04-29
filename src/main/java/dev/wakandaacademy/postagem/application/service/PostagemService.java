@@ -25,4 +25,6 @@ public interface PostagemService {
 
 	void usuarioLikePostagem(String email, UUID idPostagem, UUID idConteudo);
 
+	void usuarioDeslikePostagem(String email, UUID idPostagem, UUID idConteudo);
+
 }

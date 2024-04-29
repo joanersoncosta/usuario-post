@@ -150,4 +150,18 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - usuarioLikePostagem");
 	}
 
+	@Override
+	public void usuarioDeslikePostagem(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - usuarioDeslikePostagem");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.deslikePostagem(usuarioEmail);
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - usuarioDeslikePostagem");
+	}
+
 }

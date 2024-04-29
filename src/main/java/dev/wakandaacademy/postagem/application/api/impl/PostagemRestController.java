@@ -93,5 +93,13 @@ public class PostagemRestController implements PostagemAPI {
 		postagemService.usuarioLikePostagem(email, idPostagem, idConteudo);
 		log.info("[finaliza] ConteudoRestController - usuarioLikePostagem");
 	}
+
+	@Override
+	public void usuarioDeslikePostagem(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - usuarioDeslikePostagem");
+		String email = getUsuarioByToken(token);
+		postagemService.usuarioDeslikePostagem(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - usuarioDeslikePostagem");
+	}
 	
 }

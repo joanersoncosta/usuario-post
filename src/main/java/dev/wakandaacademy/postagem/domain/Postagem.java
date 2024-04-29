@@ -104,6 +104,22 @@ public class Postagem {
 		}
 	}
 
+	public void deslikePostagem(Usuario usuarioEmail) {
+		PostagemUsuarioDeslike deslikePostagem = deslikeUsuario(usuarioEmail);
+		PostagemUsuarioLike likeExistente = likeUsuario(usuarioEmail);
+
+		if (likes.removeIf(like -> like.equals(likeExistente))) {
+			this.like--;
+		}
+
+		if (deslikes.removeIf(deslike -> deslike.equals(deslikePostagem))) {
+			this.deslike--;
+		} else {
+			deslikes.add(deslikePostagem);
+			this.deslike++;
+		}
+	}
+	
 	private PostagemUsuarioLike likeUsuario(Usuario usuario) {
 		var likeUsuario = new PostagemUsuarioLike(idConteudo);
 		return likeUsuario;

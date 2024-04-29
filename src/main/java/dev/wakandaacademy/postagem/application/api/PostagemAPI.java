@@ -72,4 +72,10 @@ public interface PostagemAPI {
 	@SecurityRequirement(name = "Bearer Authentication")
 	void usuarioLikePostagem(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/deslike")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Dar Deslike neste post")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void usuarioDeslikePostagem(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
 }
