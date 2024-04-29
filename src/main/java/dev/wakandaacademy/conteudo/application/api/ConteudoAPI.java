@@ -71,4 +71,11 @@ public interface ConteudoAPI {
 	void deletaConteudoPorId(@RequestHeader(name = "Authorization", required = true) String token,
 			@PathVariable(value = "idConteudo") UUID idConteudo);
 
+	@PatchMapping(value = "/{idConteudo}/restrito")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Ativa status como restrito do conteudo por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void ativaStatusComoRestritoDoConteudoPorId(@RequestHeader(name = "Authorization", required = true) String token,
+			@PathVariable(value = "idConteudo") UUID idConteudo);
+
 }

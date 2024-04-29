@@ -78,4 +78,8 @@ public class Conteudo {
 	public void editaConteudo(ConteudoAlteracaoRequest conteudoRequest) {
 		this.descricao = conteudoRequest.descricao();
 	}
+
+	public void ativaSttausComoRestrito() {
+		this.status = StatusRestritoConteudo.ATIVO;
+	}
 }

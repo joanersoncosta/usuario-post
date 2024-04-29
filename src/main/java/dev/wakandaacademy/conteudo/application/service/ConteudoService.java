@@ -22,4 +22,6 @@ public interface ConteudoService {
 
 	void deletaConteudoPorId(String email, UUID idConteudo);
 
+	void ativaStatusComoRestritoDoConteudoPorId(String email, UUID idConteudo);
+
 }

@@ -3,6 +3,8 @@ package dev.wakandaacademy.conteudo.application.api.impl;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -84,6 +86,14 @@ public class ConteudoRestController implements ConteudoAPI {
 		String email = getUsuarioByToken(token);
 		conteudoService.deletaConteudoPorId(email, idConteudo);
 		log.info("[finaliza] ConteudoRestController - deletaConteudoPorId");
+	}
+
+	@Override
+	public void ativaStatusComoRestritoDoConteudoPorId(String token, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - ativaStatusComoRestritoDoConteudoPorId");
+		String email = getUsuarioByToken(token);
+		conteudoService.ativaStatusComoRestritoDoConteudoPorId(email, idConteudo);
+		log.info("[finaliza] ConteudoRestController - ativaStatusComoRestritoDoConteudoPorId");
 	}
 
 
