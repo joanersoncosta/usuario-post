@@ -106,7 +106,7 @@ public class ConteudoApplicationService implements ConteudoService {
 		Conteudo conteudo = conteudoRepository.buscaConteudoPorId(idConteudo)
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Conteúdo não encontrado!"));
 		conteudo.pertenceAoUsuario(usuarioEmail);
-		conteudo.ativaSttausComoRestrito();
+		conteudo.ativaStatusComoRestrito();
 		conteudoRepository.salva(conteudo);
 		log.info("[finaliza] ConteudoApplicationService - ativaStatusComoRestritoDoConteudoPorId");
 	}

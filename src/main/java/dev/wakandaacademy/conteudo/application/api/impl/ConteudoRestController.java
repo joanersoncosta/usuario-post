@@ -3,8 +3,6 @@ package dev.wakandaacademy.conteudo.application.api.impl;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
