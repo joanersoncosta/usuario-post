@@ -84,5 +84,9 @@ public class Postagem {
 		this.descricao = postagemRequest.descricao();
 	}
 
+	public void ativaStatusAtivacao() {
+		this.status = StatusRestritoConteudo.ATIVO;
+	}
+
 
 }

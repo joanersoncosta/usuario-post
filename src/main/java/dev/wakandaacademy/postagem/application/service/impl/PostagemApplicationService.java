@@ -121,4 +121,19 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - editaPost");
 	}
 
+	@Override
+	public void ativaStatusRestritoPostPorId(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - ativaStatusRestritoPostPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		conteudo.pertenceAoUsuario(usuarioEmail);
+		post.ativaStatusAtivacao();
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - ativaStatusRestritoPostPorId");
+	}
+
 }

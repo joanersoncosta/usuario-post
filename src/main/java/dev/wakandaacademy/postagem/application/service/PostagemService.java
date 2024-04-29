@@ -21,4 +21,6 @@ public interface PostagemService {
 
 	void deletaPostPorId(String email, UUID idPostagem, UUID idConteudo);
 
+	void ativaStatusRestritoPostPorId(String email, UUID idPostagem, UUID idConteudo);
+
 }

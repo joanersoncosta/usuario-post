@@ -6,6 +6,9 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,28 +36,34 @@ public interface PostagemAPI {
 	PostagemIdResponse criaPostagem(@RequestHeader(name = "Authorization", required = true) String token,
 			@RequestBody @Valid PostagemRequest postagemRequest);
 
-	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
+	@GetMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
 	@ResponseStatus(code = HttpStatus.OK)
 	@Operation(summary = "Busca post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	PostagemResponse buscaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
-	@PostMapping(value = "/conteudo/{idConteudo}/busca")
+	@GetMapping(value = "/conteudo/{idConteudo}/busca")
 	@ResponseStatus(code = HttpStatus.OK)
 	@Operation(summary = "Lista todos os posts por conteúdo")
 	@SecurityRequirement(name = "Bearer Authentication")
 	List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idConteudo") UUID idConteudo);
 
-	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/edita")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Operation(summary = "Edita post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void editaPost(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @RequestBody @Valid EditaPostagemRequest postagemRequest);
 
-	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
+	@DeleteMapping(value = "/{idPostagem}/conteudo/{idConteudo}/deleta")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Operation(summary = "Deleta post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void deletaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/ativa-status")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Ativa Status, torna o post como sensível/restrito")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void ativaStatusRestritoPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 }
