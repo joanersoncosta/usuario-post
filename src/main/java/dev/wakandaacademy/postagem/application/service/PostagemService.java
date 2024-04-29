@@ -3,6 +3,7 @@ package dev.wakandaacademy.postagem.application.service;
 import java.util.List;
 import java.util.UUID;
 
+import dev.wakandaacademy.postagem.application.api.request.EditaPostagemRequest;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
@@ -15,5 +16,7 @@ public interface PostagemService {
 	PostagemResponse buscaPostPorId(String email, UUID idPostagem, UUID idConteudo);
 
 	List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(String email, UUID idConteudo);
+
+	void editaPost(String email, UUID idPostagem, UUID idConteudo, EditaPostagemRequest postagemRequest);
 
 }

@@ -10,6 +10,7 @@ import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
+import dev.wakandaacademy.postagem.application.api.request.EditaPostagemRequest;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
@@ -89,6 +90,21 @@ public class PostagemApplicationService implements PostagemService {
 		List<Postagem> posts = postagemRepository.buscaTodosOsPostPorIdConteudo(conteudo.getIdConteudo());
 		log.info("[finaliza] PostagemApplicationService - buscaTodosOsPostPorIdConteudo");
 		return PostagemListResponse.converte(posts);
+	}
+
+	@Override
+	public void editaPost(String email, UUID idPostagem, UUID idConteudo, EditaPostagemRequest postagemRequest) {
+		log.info("[inicia] PostagemApplicationService - editaPost");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.pertenceAoUsuario(usuarioEmail);
+		post.alteraPost(postagemRequest);
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - editaPost");
 	}
 
 }

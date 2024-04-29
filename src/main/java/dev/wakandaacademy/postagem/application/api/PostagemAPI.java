@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.wakandaacademy.postagem.application.api.request.EditaPostagemRequest;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
@@ -33,15 +34,21 @@ public interface PostagemAPI {
 			@RequestBody @Valid PostagemRequest postagemRequest);
 
 	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
-	@ResponseStatus(code = HttpStatus.CREATED)
+	@ResponseStatus(code = HttpStatus.OK)
 	@Operation(summary = "Busca post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	PostagemResponse buscaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 	@PostMapping(value = "/conteudo/{idConteudo}/busca")
-	@ResponseStatus(code = HttpStatus.CREATED)
+	@ResponseStatus(code = HttpStatus.OK)
 	@Operation(summary = "Lista todos os posts por conteúdo")
 	@SecurityRequirement(name = "Bearer Authentication")
 	List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Busca post por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void editaPost(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @RequestBody @Valid EditaPostagemRequest postagemRequest);
 
 }

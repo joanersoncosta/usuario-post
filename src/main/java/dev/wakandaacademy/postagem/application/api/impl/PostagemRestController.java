@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.wakandaacademy.config.security.service.TokenService;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.api.PostagemAPI;
+import dev.wakandaacademy.postagem.application.api.request.EditaPostagemRequest;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.application.api.response.PostagemIdResponse;
 import dev.wakandaacademy.postagem.application.api.response.PostagemListResponse;
@@ -59,6 +60,14 @@ public class PostagemRestController implements PostagemAPI {
 		List<PostagemListResponse>  postagemListResponse = postagemService.buscaTodosOsPostPorIdConteudo(email, idConteudo);
 		log.info("[finaliza] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
 		return postagemListResponse;
+	}
+
+	@Override
+	public void editaPost(String token, UUID idPostagem, UUID idConteudo, EditaPostagemRequest postagemRequest) {
+		log.info("[inicia] ConteudoRestController - editaPost");
+		String email = getUsuarioByToken(token);
+		postagemService.editaPost(email, idPostagem, idConteudo, postagemRequest);
+		log.info("[finaliza] ConteudoRestController - editaPost");
 	}
 	
 }

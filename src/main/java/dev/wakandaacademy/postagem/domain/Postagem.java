@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
+import dev.wakandaacademy.postagem.application.api.request.EditaPostagemRequest;
 import dev.wakandaacademy.postagem.application.api.request.PostagemRequest;
 import dev.wakandaacademy.postagem.domain.enuns.StatusAtivacaoPostagem;
 import dev.wakandaacademy.usuario.domain.Usuario;
@@ -72,5 +73,16 @@ public class Postagem {
 			throw APIException.build(HttpStatus.BAD_REQUEST, "Post não pertence a este conteúdo.");
 		}
 	}
+
+	public void pertenceAoUsuario(Usuario emailUsuario) {
+		if (!this.idPublicador.equals(emailUsuario.getIdUsuario())) {
+			throw APIException.build(HttpStatus.UNAUTHORIZED, "Usuário não autorizado.");
+		}
+	}
+
+	public void alteraPost(EditaPostagemRequest postagemRequest) {
+		this.descricao = postagemRequest.descricao();
+	}
+
 
 }
