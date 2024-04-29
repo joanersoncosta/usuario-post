@@ -14,4 +14,6 @@ public interface PostagemRepository {
 
 	List<Postagem> buscaTodosOsPostPorIdConteudo(UUID idConteudo);
 
+	void deletaPost(Postagem post);
+
 }

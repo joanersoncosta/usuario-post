@@ -69,5 +69,13 @@ public class PostagemRestController implements PostagemAPI {
 		postagemService.editaPost(email, idPostagem, idConteudo, postagemRequest);
 		log.info("[finaliza] ConteudoRestController - editaPost");
 	}
+
+	@Override
+	public void deletaPostPorId(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - deletaPostPorId");
+		String email = getUsuarioByToken(token);
+		postagemService.deletaPostPorId(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - deletaPostPorId");
+	}
 	
 }

@@ -19,4 +19,6 @@ public interface PostagemService {
 
 	void editaPost(String email, UUID idPostagem, UUID idConteudo, EditaPostagemRequest postagemRequest);
 
+	void deletaPostPorId(String email, UUID idPostagem, UUID idConteudo);
+
 }

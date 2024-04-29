@@ -107,4 +107,18 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - editaPost");
 	}
 
+	@Override
+	public void deletaPostPorId(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - editaPost");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.pertenceAoUsuario(usuarioEmail);
+		postagemRepository.deletaPost(post);
+		log.info("[finaliza] PostagemApplicationService - editaPost");
+	}
+
 }

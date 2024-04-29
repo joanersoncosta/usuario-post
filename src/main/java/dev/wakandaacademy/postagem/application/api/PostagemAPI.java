@@ -47,8 +47,14 @@ public interface PostagemAPI {
 
 	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	@Operation(summary = "Busca post por ID")
+	@Operation(summary = "Edita post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void editaPost(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @RequestBody @Valid EditaPostagemRequest postagemRequest);
+
+	@PostMapping(value = "/{idPostagem}/conteudo/{idConteudo}/busca")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Deleta post por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void deletaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 }

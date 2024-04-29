@@ -50,4 +50,11 @@ public class PostagemInfraRepository implements PostagemRepository {
 		return posts;
 	}
 
+	@Override
+	public void deletaPost(Postagem post) {
+		log.info("[start] ConteudoInfraRepository - deletaPost");
+		postagemSpringDBMongoRepository.delete(post);
+		log.info("[finish] ConteudoInfraRepository - deletaPost");
+	}
+
 }
