@@ -27,4 +27,8 @@ public interface PostagemService {
 
 	void usuarioDeslikePostagem(String email, UUID idPostagem, UUID idConteudo);
 
+	void ativaStatusPostPorId(String email, UUID idPostagem, UUID idConteudo);
+
+	void desativaStatusPostPorId(String email, UUID idPostagem, UUID idConteudo);
+
 }

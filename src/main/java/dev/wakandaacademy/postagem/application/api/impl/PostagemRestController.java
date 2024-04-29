@@ -57,7 +57,8 @@ public class PostagemRestController implements PostagemAPI {
 	public List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(String token, UUID idConteudo) {
 		log.info("[inicia] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
 		String email = getUsuarioByToken(token);
-		List<PostagemListResponse>  postagemListResponse = postagemService.buscaTodosOsPostPorIdConteudo(email, idConteudo);
+		List<PostagemListResponse> postagemListResponse = postagemService.buscaTodosOsPostPorIdConteudo(email,
+				idConteudo);
 		log.info("[finaliza] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
 		return postagemListResponse;
 	}
@@ -101,5 +102,21 @@ public class PostagemRestController implements PostagemAPI {
 		postagemService.usuarioDeslikePostagem(email, idPostagem, idConteudo);
 		log.info("[finaliza] ConteudoRestController - usuarioDeslikePostagem");
 	}
-	
+
+	@Override
+	public void ativaStatusPostPorId(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - ativaStatusPostPorId");
+		String email = getUsuarioByToken(token);
+		postagemService.ativaStatusPostPorId(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - ativaStatusPostPorId");
+	}
+
+	@Override
+	public void desativaStatusPostPorId(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - desativaStatusPostPorId");
+		String email = getUsuarioByToken(token);
+		postagemService.desativaStatusPostPorId(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - desativaStatusPostPorId");
+	}
+
 }

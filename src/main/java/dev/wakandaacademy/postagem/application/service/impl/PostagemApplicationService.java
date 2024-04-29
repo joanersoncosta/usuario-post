@@ -164,4 +164,32 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - usuarioDeslikePostagem");
 	}
 
+	@Override
+	public void ativaStatusPostPorId(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - ativaStatusPostPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.ativaStatus();
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - ativaStatusPostPorId");
+	}
+
+	@Override
+	public void desativaStatusPostPorId(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - desativaStatusPostPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.desativaStatus();
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - desativaStatusPostPorId");
+	}
+
 }

@@ -130,4 +130,12 @@ public class Postagem {
 		return likeUsuario;
 	}
 
+	public void ativaStatus() {
+		this.statusAtivacao = StatusAtivacaoPostagem.ATIVO;
+	}
+
+	public void desativaStatus() {
+		this.statusAtivacao = StatusAtivacaoPostagem.ATIVO;
+	}
+
 }

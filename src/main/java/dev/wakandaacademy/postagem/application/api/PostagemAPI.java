@@ -60,7 +60,7 @@ public interface PostagemAPI {
 	@SecurityRequirement(name = "Bearer Authentication")
 	void deletaPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
-	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/ativa-status")
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/ativa-status-restrito")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Operation(summary = "Ativa Status, torna o post como sensível/restrito")
 	@SecurityRequirement(name = "Bearer Authentication")
@@ -77,5 +77,17 @@ public interface PostagemAPI {
 	@Operation(summary = "Dar Deslike neste post")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void usuarioDeslikePostagem(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/ativa-status")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Ativa Status do post")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void ativaStatusPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/desativa-status")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Ativa Status do post")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void desativaStatusPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 }
