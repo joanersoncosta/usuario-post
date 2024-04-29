@@ -16,4 +16,6 @@ public interface PostagemRepository {
 
 	void deletaPost(Postagem post);
 
+	void desativaTodosOsPosts(UUID idConteudo);
+
 }

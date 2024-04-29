@@ -173,6 +173,7 @@ public class PostagemApplicationService implements PostagemService {
 		Conteudo conteudo = detalhaConteudo(idConteudo);
 		Postagem post = detalhaPost(idPostagem);
 		post.pertenceAoConteudo(conteudo);
+		postagemRepository.desativaTodosOsPosts(conteudo.getIdConteudo());
 		post.ativaStatus();
 		postagemRepository.salva(post);
 		log.info("[finaliza] PostagemApplicationService - ativaStatusPostPorId");

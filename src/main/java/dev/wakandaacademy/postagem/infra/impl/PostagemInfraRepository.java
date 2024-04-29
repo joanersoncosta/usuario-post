@@ -7,11 +7,13 @@ import java.util.UUID;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.domain.Postagem;
+import dev.wakandaacademy.postagem.domain.enuns.StatusAtivacaoPostagem;
 import dev.wakandaacademy.postagem.infra.PostagemSpringDBMongoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -55,6 +57,18 @@ public class PostagemInfraRepository implements PostagemRepository {
 		log.info("[start] ConteudoInfraRepository - deletaPost");
 		postagemSpringDBMongoRepository.delete(post);
 		log.info("[finish] ConteudoInfraRepository - deletaPost");
+	}
+
+	@Override
+	public void desativaTodosOsPosts(UUID idConteudo) {
+		log.info("[start] ConteudoInfraRepository - desativaTodosOsPosts");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idConteudo").is(idConteudo).and("status").is(StatusRestritoConteudo.INAVITO));
+
+		Update update= new Update();
+		update.set("statusAtivacao", StatusAtivacaoPostagem.INATIVO);
+		mongoTemplate.updateFirst(query, update, Postagem.class);
+		log.info("[finish] ConteudoInfraRepository - desativaTodosOsPosts");
 	}
 
 }
