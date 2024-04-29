@@ -85,5 +85,13 @@ public class PostagemRestController implements PostagemAPI {
 		postagemService.ativaStatusRestritoPostPorId(email, idPostagem, idConteudo);
 		log.info("[finaliza] ConteudoRestController - ativaStatusRestritoPostPorId");
 	}
+
+	@Override
+	public void usuarioLikePostagem(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - usuarioLikePostagem");
+		String email = getUsuarioByToken(token);
+		postagemService.usuarioLikePostagem(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - usuarioLikePostagem");
+	}
 	
 }

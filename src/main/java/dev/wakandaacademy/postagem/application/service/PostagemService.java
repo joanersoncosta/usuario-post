@@ -23,4 +23,6 @@ public interface PostagemService {
 
 	void ativaStatusRestritoPostPorId(String email, UUID idPostagem, UUID idConteudo);
 
+	void usuarioLikePostagem(String email, UUID idPostagem, UUID idConteudo);
+
 }

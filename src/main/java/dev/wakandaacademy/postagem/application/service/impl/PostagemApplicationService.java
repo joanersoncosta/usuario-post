@@ -136,4 +136,18 @@ public class PostagemApplicationService implements PostagemService {
 		log.info("[finaliza] PostagemApplicationService - ativaStatusRestritoPostPorId");
 	}
 
+	@Override
+	public void usuarioLikePostagem(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - usuarioLikePostagem");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		log.info("[idPostagem], [idConteudo]", idPostagem, idConteudo);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		post.likePostagem(usuarioEmail);
+		postagemRepository.salva(post);
+		log.info("[finaliza] PostagemApplicationService - usuarioLikePostagem");
+	}
+
 }

@@ -66,4 +66,10 @@ public interface PostagemAPI {
 	@SecurityRequirement(name = "Bearer Authentication")
 	void ativaStatusRestritoPostPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
+	@PatchMapping(value = "/{idPostagem}/conteudo/{idConteudo}/like")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Dar Like neste post")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void usuarioLikePostagem(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
+
 }

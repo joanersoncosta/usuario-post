@@ -88,5 +88,30 @@ public class Postagem {
 		this.status = StatusRestritoConteudo.ATIVO;
 	}
 
+	public void likePostagem(Usuario usuarioEmail) {
+		PostagemUsuarioLike likePostagem = likeUsuario(usuarioEmail);
+		PostagemUsuarioDeslike deslikeExistente = deslikeUsuario(usuarioEmail);
+
+		if (deslikes.removeIf(deslike -> deslike.equals(deslikeExistente))) {
+			this.deslike--;
+		}
+
+		if (likes.removeIf(like -> like.equals(likePostagem))) {
+			this.like--;
+		} else {
+			likes.add(likePostagem);
+			this.like++;
+		}
+	}
+
+	private PostagemUsuarioLike likeUsuario(Usuario usuario) {
+		var likeUsuario = new PostagemUsuarioLike(idConteudo);
+		return likeUsuario;
+	}
+
+	private PostagemUsuarioDeslike deslikeUsuario(Usuario usuario) {
+		var likeUsuario = new PostagemUsuarioDeslike(idConteudo);
+		return likeUsuario;
+	}
 
 }
