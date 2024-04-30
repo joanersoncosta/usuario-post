@@ -1,7 +1,9 @@
 package dev.wakandaacademy.comentario.application.api.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import dev.wakandaacademy.comentario.domain.Comentario;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +44,11 @@ public class ComentarioResponse {
 	
 	public static ComentarioResponse converte(Comentario comentario) {
 		return new ComentarioResponse(comentario);
+	}
+
+	public static List<ComentarioResponse> converte(List<Comentario> comentarios) {
+		return comentarios.stream().map(ComentarioResponse::new)
+				.collect(Collectors.toList());
 	}
 
 }

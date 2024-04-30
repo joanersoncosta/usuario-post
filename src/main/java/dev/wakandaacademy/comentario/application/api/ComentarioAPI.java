@@ -1,5 +1,6 @@
 package dev.wakandaacademy.comentario.application.api;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -36,5 +37,11 @@ public interface ComentarioAPI {
 	@Operation(summary = "Busca comentario por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	ComentarioResponse buscaComentarioPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
+
+	@GetMapping(value = "/conteudo/{idConteudo}/postagem/{idPostagem}/busca")
+	@ResponseStatus(code = HttpStatus.OK)
+	@Operation(summary = "Busca comentario por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	List<ComentarioResponse> buscaTodosOsComentarios(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo);
 
 }

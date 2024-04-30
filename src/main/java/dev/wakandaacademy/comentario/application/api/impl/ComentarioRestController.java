@@ -1,5 +1,6 @@
 package dev.wakandaacademy.comentario.application.api.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,16 @@ public class ComentarioRestController implements ComentarioAPI {
 		ComentarioResponse comentarioResponse = comentarioService.buscaComentarioPorId(email, idPostagem, idConteudo, idComentario);
 		log.info("[finaliza] ConteudoRestController - buscaComentarioPorId");
 		return comentarioResponse;
+	}
+
+	@Override
+	public List<ComentarioResponse> buscaTodosOsComentarios(String token, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] ConteudoRestController - buscaTodosOsComentarios");
+		String email = getUsuarioByToken(token);
+		List<ComentarioResponse>  comentarioResponse = comentarioService.buscaTodosOsComentarios(email, idPostagem, idConteudo);
+		log.info("[finaliza] ConteudoRestController - buscaTodosOsComentarios");
+		return comentarioResponse;
+
 	}
 
 }

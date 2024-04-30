@@ -1,5 +1,6 @@
 package dev.wakandaacademy.comentario.application.service.impl;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -86,6 +87,19 @@ public class ComentarioApplicationService implements ComentarioService {
 		}
 		log.info("[finaliza] PostagemApplicationService - buscaComentarioPorId");
 		return ComentarioResponse.converte(comentario);
+	}
+
+	@Override
+	public List<ComentarioResponse> buscaTodosOsComentarios(String email, UUID idPostagem, UUID idConteudo) {
+		log.info("[inicia] PostagemApplicationService - buscaTodosOsComentarios");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		List<Comentario> comentarioListResponse = comentarioRepository.buscaTodosOsComentarios(post.getIdPostagem());
+		log.info("[finaliza] PostagemApplicationService - buscaTodosOsComentarios");
+		return ComentarioResponse.converte(comentarioListResponse);
 	}
 
 }
