@@ -154,4 +154,19 @@ public class ComentarioApplicationService implements ComentarioService {
 		log.info("[finaliza] ComentarioApplicationService - ativaStatusRestritoComentarioPorId");
 	}
 
+	@Override
+	public void usuarioLikeComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] ComentarioApplicationService - usuarioLikeComentario");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		Comentario comentario = detalhaComentario(idComentario);
+		comentario.pertenceAoPost(post);
+		comentario.likeComentario(usuarioEmail);
+		comentarioRepository.salva(comentario);
+		log.info("[finaliza] ComentarioApplicationService - usuarioLikeComentario");
+	}
+
 }

@@ -87,4 +87,31 @@ public class Comentario {
 	public void ativaStatusAtivacao() {
 		this.status = StatusRestritoConteudo.ATIVO;
 	}
+
+	public void likeComentario(Usuario usuarioEmail) {
+		ComentarioUsuarioLike likePostagem = likeUsuario(usuarioEmail);
+		ComentarioUsuarioDeslike deslikeExistente = deslikeUsuario(usuarioEmail);
+
+		if (deslikes.removeIf(deslike -> deslike.equals(deslikeExistente))) {
+			this.deslike--;
+		}
+
+		if (likes.removeIf(like -> like.equals(likePostagem))) {
+			this.like--;
+		} else {
+			likes.add(likePostagem);
+			this.like++;
+		}
+	}
+	
+	private ComentarioUsuarioLike likeUsuario(Usuario usuario) {
+		var likeUsuario = new ComentarioUsuarioLike(idConteudo);
+		return likeUsuario;
+	}
+
+	private ComentarioUsuarioDeslike deslikeUsuario(Usuario usuario) {
+		var likeUsuario = new ComentarioUsuarioDeslike(idConteudo);
+		return likeUsuario;
+	}
+
 }

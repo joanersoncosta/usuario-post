@@ -23,4 +23,6 @@ public interface ComentarioService {
 
 	void ativaStatusRestritoComentarioPorId(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
 
+	void usuarioLikeComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
+
 }

@@ -65,4 +65,10 @@ public interface ComentarioAPI {
 	@SecurityRequirement(name = "Bearer Authentication")
 	void ativaStatusRestritoComentarioPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
 
+	@PatchMapping(value = "/{idComentario}/conteudo/{idConteudo}/postagem/{idPostagem}/like")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Dar Like neste comentário")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void usuarioLikeComentario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
+
 }
