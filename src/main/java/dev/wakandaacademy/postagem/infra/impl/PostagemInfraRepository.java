@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import dev.wakandaacademy.comentario.domain.Comentario;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.domain.Postagem;
@@ -55,8 +56,18 @@ public class PostagemInfraRepository implements PostagemRepository {
 	@Override
 	public void deletaPost(Postagem post) {
 		log.info("[start] ConteudoInfraRepository - deletaPost");
+		deletaComentariosAssociados(post);
 		postagemSpringDBMongoRepository.delete(post);
 		log.info("[finish] ConteudoInfraRepository - deletaPost");
+	}
+	
+	private void deletaComentariosAssociados(Postagem post) {
+		log.info("[start] ConteudoInfraRepository - deletaComentariosAssociados");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idPostagem").is(post.getIdPostagem()));
+
+		mongoTemplate.remove(query, Comentario.class);
+		log.info("[finish] ConteudoInfraRepository - deletaComentariosAssociados");
 	}
 
 	@Override
