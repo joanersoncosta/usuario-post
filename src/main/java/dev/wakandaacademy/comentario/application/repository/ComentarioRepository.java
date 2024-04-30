@@ -14,4 +14,6 @@ public interface ComentarioRepository {
 
 	List<Comentario> buscaTodosOsComentarios(UUID idPostagem);
 
+	void deletaComentario(Comentario comentario);
+
 }

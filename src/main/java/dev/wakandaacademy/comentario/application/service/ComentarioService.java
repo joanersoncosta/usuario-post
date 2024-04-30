@@ -19,4 +19,6 @@ public interface ComentarioService {
 	void editaComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario,
 			EditaComentarioRequest comentarioRequest);
 
+	void deletaComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
+
 }

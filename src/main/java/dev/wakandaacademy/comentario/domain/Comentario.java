@@ -77,4 +77,10 @@ public class Comentario {
 	public void editaComentario(EditaComentarioRequest comentarioRequest) {
 		this.descricao = comentarioRequest.descricao();
 	}
+
+	public void pertenceAoUsuario(Usuario emailUsuario) {
+		if (!this.idComentarista.equals(emailUsuario.getIdUsuario())) {
+			throw APIException.build(HttpStatus.UNAUTHORIZED, "Usuário não autorizado.");
+		}
+	}
 }

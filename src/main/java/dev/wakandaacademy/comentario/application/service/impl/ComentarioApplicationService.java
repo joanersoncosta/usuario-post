@@ -44,6 +44,8 @@ public class ComentarioApplicationService implements ComentarioService {
 		Postagem post = detalhaPost(postagemRequest.idPostagem());
 		post.pertenceAoConteudo(conteudo);
 		Comentario comentario = comentarioRepository.salva(new Comentario(postagemRequest, post.getIdPublicador(), usuarioEmail));
+		post.incrementaQuantidadeComentario();
+		postagemRepository.salva(post);
 		log.info("[finaliza] ComentarioApplicationService - criaComentario");
 		return ComentarioIdResponse.builder().idComentario(comentario.getIdComentario()).build();
 	}
@@ -117,6 +119,23 @@ public class ComentarioApplicationService implements ComentarioService {
 		comentario.editaComentario(comentarioRequest);
 		comentarioRepository.salva(comentario);
 		log.info("[finaliza] ComentarioApplicationService - editaComentario");
+	}
+
+	@Override
+	public void deletaComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] ComentarioApplicationService - deletaComentario");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		Comentario comentario = detalhaComentario(idComentario);
+		comentario.pertenceAoPost(post);
+		comentario.pertenceAoUsuario(usuarioEmail);
+		comentarioRepository.deletaComentario(comentario);
+		post.decrementaQuantidadeComentario();
+		postagemRepository.salva(post);
+		log.info("[finaliza] ComentarioApplicationService - deletaComentario");
 	}
 
 }

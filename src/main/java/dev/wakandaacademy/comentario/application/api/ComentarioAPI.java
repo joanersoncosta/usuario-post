@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,5 +52,11 @@ public interface ComentarioAPI {
 	@Operation(summary = "Edita post por ID")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void editaComentario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario, @RequestBody @Valid EditaComentarioRequest comentarioRequest);
+
+	@DeleteMapping(value = "/{idComentario}/conteudo/{idConteudo}/postagem/{idPostagem}/deleta")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Deleta post por ID")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void deletaComentario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
 
 }

@@ -27,88 +27,88 @@ public class PostagemRestController implements PostagemAPI {
 
 	@Override
 	public PostagemIdResponse criaPostagem(String token, PostagemRequest postagemRequest) {
-		log.info("[inicia] ConteudoRestController - criaPostagem");
+		log.info("[inicia] PostagemRestController - criaPostagem");
 		String email = getUsuarioByToken(token);
 		PostagemIdResponse postagemIdResponse = postagemService.criaPostagem(email, postagemRequest);
-		log.info("[finaliza] ConteudoRestController - criaPostagem");
+		log.info("[finaliza] PostagemRestController - criaPostagem");
 		return postagemIdResponse;
 	}
 
 	private String getUsuarioByToken(String token) {
-		log.info("[inicia] ChamadoRestController - getUsuarioByToken");
+		log.info("[inicia] PostagemRestController - getUsuarioByToken");
 		log.debug("[token] {}", token);
 		String emailUsuario = tokenService.getUsuarioByBearerToken(token)
 				.orElseThrow(() -> APIException.build(HttpStatus.UNAUTHORIZED, token));
 		log.info("[emailUsuario] {}", emailUsuario);
-		log.info("[finaliza] ChamadoRestController - getUsuarioByToken");
+		log.info("[finaliza] PostagemRestController - getUsuarioByToken");
 		return emailUsuario;
 	}
 
 	@Override
 	public PostagemResponse buscaPostPorId(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - buscaPostPorId");
+		log.info("[inicia] PostagemRestController - buscaPostPorId");
 		String email = getUsuarioByToken(token);
 		PostagemResponse postagemResponse = postagemService.buscaPostPorId(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - buscaPostPorId");
+		log.info("[finaliza] PostagemRestController - buscaPostPorId");
 		return postagemResponse;
 	}
 
 	@Override
 	public List<PostagemListResponse> buscaTodosOsPostPorIdConteudo(String token, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
+		log.info("[inicia] PostagemRestController - buscaTodosOsPostPorIdConteudo");
 		String email = getUsuarioByToken(token);
 		List<PostagemListResponse> postagemListResponse = postagemService.buscaTodosOsPostPorIdConteudo(email,
 				idConteudo);
-		log.info("[finaliza] ConteudoRestController - buscaTodosOsPostPorIdConteudo");
+		log.info("[finaliza] PostagemRestController - buscaTodosOsPostPorIdConteudo");
 		return postagemListResponse;
 	}
 
 	@Override
 	public void editaPost(String token, UUID idPostagem, UUID idConteudo, EditaPostagemRequest postagemRequest) {
-		log.info("[inicia] ConteudoRestController - editaPost");
+		log.info("[inicia] PostagemRestController - editaPost");
 		String email = getUsuarioByToken(token);
 		postagemService.editaPost(email, idPostagem, idConteudo, postagemRequest);
-		log.info("[finaliza] ConteudoRestController - editaPost");
+		log.info("[finaliza] PostagemRestController - editaPost");
 	}
 
 	@Override
 	public void deletaPostPorId(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - deletaPostPorId");
+		log.info("[inicia] PostagemRestController - deletaPostPorId");
 		String email = getUsuarioByToken(token);
 		postagemService.deletaPostPorId(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - deletaPostPorId");
+		log.info("[finaliza] PostagemRestController - deletaPostPorId");
 	}
 
 	@Override
 	public void ativaStatusRestritoPostPorId(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - ativaStatusRestritoPostPorId");
+		log.info("[inicia] PostagemRestController - ativaStatusRestritoPostPorId");
 		String email = getUsuarioByToken(token);
 		postagemService.ativaStatusRestritoPostPorId(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - ativaStatusRestritoPostPorId");
+		log.info("[finaliza] PostagemRestController - ativaStatusRestritoPostPorId");
 	}
 
 	@Override
 	public void usuarioLikePostagem(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - usuarioLikePostagem");
+		log.info("[inicia] PostagemRestController - usuarioLikePostagem");
 		String email = getUsuarioByToken(token);
 		postagemService.usuarioLikePostagem(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - usuarioLikePostagem");
+		log.info("[finaliza] PostagemRestController - usuarioLikePostagem");
 	}
 
 	@Override
 	public void usuarioDeslikePostagem(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - usuarioDeslikePostagem");
+		log.info("[inicia] PostagemRestController - usuarioDeslikePostagem");
 		String email = getUsuarioByToken(token);
 		postagemService.usuarioDeslikePostagem(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - usuarioDeslikePostagem");
+		log.info("[finaliza] PostagemRestController - usuarioDeslikePostagem");
 	}
 
 	@Override
 	public void ativaStatusPostPorId(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - ativaStatusPostPorId");
+		log.info("[inicia] PostagemRestController - ativaStatusPostPorId");
 		String email = getUsuarioByToken(token);
 		postagemService.ativaStatusPostPorId(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - ativaStatusPostPorId");
+		log.info("[finaliza] PostagemRestController - ativaStatusPostPorId");
 	}
 
 	@Override

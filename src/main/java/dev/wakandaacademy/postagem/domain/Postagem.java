@@ -137,5 +137,13 @@ public class Postagem {
 	public void desativaStatus() {
 		this.statusAtivacao = StatusAtivacaoPostagem.ATIVO;
 	}
+	
+	public void incrementaQuantidadeComentario() {
+		this.quantidadeComentarios ++;
+	}
+	
+	public void decrementaQuantidadeComentario() {
+		this.quantidadeComentarios --;
+	}
 
 }

@@ -3,8 +3,6 @@ package dev.wakandaacademy.comentario.application.api.impl;
 import java.util.List;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -73,6 +71,14 @@ public class ComentarioRestController implements ComentarioAPI {
 		String email = getUsuarioByToken(token);
 		comentarioService.editaComentario(email, idPostagem, idConteudo, idComentario, comentarioRequest);
 		log.info("[finaliza] ComentarioRestController - editaComentario");
+	}
+
+	@Override
+	public void deletaComentario(String token, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] ComentarioRestController - deletaComentario");
+		String email = getUsuarioByToken(token);
+		comentarioService.deletaComentario(email, idPostagem, idConteudo, idComentario);
+		log.info("[finaliza] ComentarioRestController - deletaComentario");
 	}
 
 }
