@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import dev.wakandaacademy.comentario.application.api.request.ComentarioRequest;
+import dev.wakandaacademy.comentario.application.api.request.EditaComentarioRequest;
 import dev.wakandaacademy.comentario.application.api.response.ComentarioIdResponse;
 import dev.wakandaacademy.comentario.application.api.response.ComentarioResponse;
 import dev.wakandaacademy.comentario.application.repository.ComentarioRepository;
@@ -100,6 +101,22 @@ public class ComentarioApplicationService implements ComentarioService {
 		List<Comentario> comentarioListResponse = comentarioRepository.buscaTodosOsComentarios(post.getIdPostagem());
 		log.info("[finaliza] PostagemApplicationService - buscaTodosOsComentarios");
 		return ComentarioResponse.converte(comentarioListResponse);
+	}
+
+	@Override
+	public void editaComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario,
+			EditaComentarioRequest comentarioRequest) {
+		log.info("[inicia] ComentarioApplicationService - editaComentario");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		Comentario comentario = detalhaComentario(idComentario);
+		comentario.pertenceAoPost(post);
+		comentario.editaComentario(comentarioRequest);
+		comentarioRepository.salva(comentario);
+		log.info("[finaliza] ComentarioApplicationService - editaComentario");
 	}
 
 }

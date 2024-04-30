@@ -3,11 +3,14 @@ package dev.wakandaacademy.comentario.application.api.impl;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.wakandaacademy.comentario.application.api.ComentarioAPI;
 import dev.wakandaacademy.comentario.application.api.request.ComentarioRequest;
+import dev.wakandaacademy.comentario.application.api.request.EditaComentarioRequest;
 import dev.wakandaacademy.comentario.application.api.response.ComentarioIdResponse;
 import dev.wakandaacademy.comentario.application.api.response.ComentarioResponse;
 import dev.wakandaacademy.comentario.application.service.ComentarioService;
@@ -24,41 +27,52 @@ public class ComentarioRestController implements ComentarioAPI {
 	private final ComentarioService comentarioService;
 
 	private String getUsuarioByToken(String token) {
-		log.info("[inicia] ChamadoRestController - getUsuarioByToken");
+		log.info("[inicia] ComentarioRestController - getUsuarioByToken");
 		log.debug("[token] {}", token);
 		String emailUsuario = tokenService.getUsuarioByBearerToken(token)
 				.orElseThrow(() -> APIException.build(HttpStatus.UNAUTHORIZED, token));
 		log.info("[emailUsuario] {}", emailUsuario);
-		log.info("[finaliza] ChamadoRestController - getUsuarioByToken");
+		log.info("[finaliza] ComentarioRestController - getUsuarioByToken");
 		return emailUsuario;
 	}
-	
+
 	@Override
 	public ComentarioIdResponse criaComentario(String token, ComentarioRequest postagemRequest) {
-		log.info("[inicia] ConteudoRestController - criaComentario");
+		log.info("[inicia] ComentarioRestController - criaComentario");
 		String email = getUsuarioByToken(token);
 		ComentarioIdResponse comentarioIdResponse = comentarioService.criaComentario(email, postagemRequest);
-		log.info("[finaliza] ConteudoRestController - criaComentario");
+		log.info("[finaliza] ComentarioRestController - criaComentario");
 		return comentarioIdResponse;
 	}
 
 	@Override
 	public ComentarioResponse buscaComentarioPorId(String token, UUID idPostagem, UUID idConteudo, UUID idComentario) {
-		log.info("[inicia] ConteudoRestController - buscaComentarioPorId");
+		log.info("[inicia] ComentarioRestController - buscaComentarioPorId");
 		String email = getUsuarioByToken(token);
-		ComentarioResponse comentarioResponse = comentarioService.buscaComentarioPorId(email, idPostagem, idConteudo, idComentario);
-		log.info("[finaliza] ConteudoRestController - buscaComentarioPorId");
+		ComentarioResponse comentarioResponse = comentarioService.buscaComentarioPorId(email, idPostagem, idConteudo,
+				idComentario);
+		log.info("[finaliza] ComentarioRestController - buscaComentarioPorId");
 		return comentarioResponse;
 	}
 
 	@Override
 	public List<ComentarioResponse> buscaTodosOsComentarios(String token, UUID idPostagem, UUID idConteudo) {
-		log.info("[inicia] ConteudoRestController - buscaTodosOsComentarios");
+		log.info("[inicia] ComentarioRestController - buscaTodosOsComentarios");
 		String email = getUsuarioByToken(token);
-		List<ComentarioResponse>  comentarioResponse = comentarioService.buscaTodosOsComentarios(email, idPostagem, idConteudo);
-		log.info("[finaliza] ConteudoRestController - buscaTodosOsComentarios");
+		List<ComentarioResponse> comentarioResponse = comentarioService.buscaTodosOsComentarios(email, idPostagem,
+				idConteudo);
+		log.info("[finaliza] ComentarioRestController - buscaTodosOsComentarios");
 		return comentarioResponse;
 
+	}
+
+	@Override
+	public void editaComentario(String token, UUID idPostagem, UUID idConteudo, UUID idComentario,
+			EditaComentarioRequest comentarioRequest) {
+		log.info("[inicia] ComentarioRestController - editaComentario");
+		String email = getUsuarioByToken(token);
+		comentarioService.editaComentario(email, idPostagem, idConteudo, idComentario, comentarioRequest);
+		log.info("[finaliza] ComentarioRestController - editaComentario");
 	}
 
 }
