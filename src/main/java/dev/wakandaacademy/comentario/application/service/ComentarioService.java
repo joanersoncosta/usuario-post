@@ -21,4 +21,6 @@ public interface ComentarioService {
 
 	void deletaComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
 
+	void ativaStatusRestritoComentarioPorId(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
+
 }

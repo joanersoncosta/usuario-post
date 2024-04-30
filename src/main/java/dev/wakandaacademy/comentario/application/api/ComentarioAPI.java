@@ -59,4 +59,10 @@ public interface ComentarioAPI {
 	@SecurityRequirement(name = "Bearer Authentication")
 	void deletaComentario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
 
+	@PatchMapping(value = "/{idComentario}/conteudo/{idConteudo}/postagem/{idPostagem}/ativa-status-restrito")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@Operation(summary = "Ativa Status, torna o comentario como sensível/restrito")
+	@SecurityRequirement(name = "Bearer Authentication")
+	void ativaStatusRestritoComentarioPorId(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
+
 }

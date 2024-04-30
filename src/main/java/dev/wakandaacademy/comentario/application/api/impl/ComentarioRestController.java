@@ -81,4 +81,13 @@ public class ComentarioRestController implements ComentarioAPI {
 		log.info("[finaliza] ComentarioRestController - deletaComentario");
 	}
 
+	@Override
+	public void ativaStatusRestritoComentarioPorId(String token, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] ComentarioRestController - ativaStatusRestritoComentarioPorId");
+		String email = getUsuarioByToken(token);
+		comentarioService.ativaStatusRestritoComentarioPorId(email, idPostagem, idConteudo, idComentario);
+		log.info("[finaliza] ComentarioRestController - ativaStatusRestritoComentarioPorId");
+	}
+
+
 }

@@ -83,4 +83,8 @@ public class Comentario {
 			throw APIException.build(HttpStatus.UNAUTHORIZED, "Usuário não autorizado.");
 		}
 	}
+
+	public void ativaStatusAtivacao() {
+		this.status = StatusRestritoConteudo.ATIVO;
+	}
 }
