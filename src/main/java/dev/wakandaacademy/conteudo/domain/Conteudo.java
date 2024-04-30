@@ -74,6 +74,12 @@ public class Conteudo {
 			throw APIException.build(HttpStatus.UNAUTHORIZED, "Usuário não autorizado.");
 		}		
 	}
+	
+	public void pertenceAoConteudo(Usuario usuario) {
+		if (!this.idUsuario.equals(usuario.getIdUsuario())) {
+			throw APIException.build(HttpStatus.BAD_REQUEST, "conteúdo não pertence a este usuário.");
+		}
+	}
 
 	public void editaConteudo(ConteudoAlteracaoRequest conteudoRequest) {
 		this.descricao = conteudoRequest.descricao();
