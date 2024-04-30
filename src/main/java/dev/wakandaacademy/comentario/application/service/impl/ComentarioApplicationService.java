@@ -7,11 +7,13 @@ import org.springframework.stereotype.Service;
 
 import dev.wakandaacademy.comentario.application.api.request.ComentarioRequest;
 import dev.wakandaacademy.comentario.application.api.response.ComentarioIdResponse;
+import dev.wakandaacademy.comentario.application.api.response.ComentarioResponse;
 import dev.wakandaacademy.comentario.application.repository.ComentarioRepository;
 import dev.wakandaacademy.comentario.application.service.ComentarioService;
 import dev.wakandaacademy.comentario.domain.Comentario;
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
+import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.handler.APIException;
 import dev.wakandaacademy.postagem.application.repository.PostagemRepository;
 import dev.wakandaacademy.postagem.domain.Postagem;
@@ -59,6 +61,31 @@ public class ComentarioApplicationService implements ComentarioService {
 				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Post não encontrado!"));
 		log.info("[finaliza] PostagemApplicationService - detalhaPost");
 		return post;
+	}
+	
+	private Comentario detalhaComentario(UUID idComentario) {
+		log.info("[inicia] PostagemApplicationService - detalhaComentario");
+		log.info("[idComentario], ", idComentario);
+		Comentario comentario = comentarioRepository.buscaComentarioPorId(idComentario)
+				.orElseThrow(() -> APIException.build(HttpStatus.NOT_FOUND, "Comentário não encontrado!"));
+		log.info("[finaliza] PostagemApplicationService - detalhaComentario");
+		return comentario;
+	}
+
+	@Override
+	public ComentarioResponse buscaComentarioPorId(String email, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] PostagemApplicationService - buscaComentarioPorId");
+		Usuario usuarioEmail = usuarioRepository.buscaUsuarioPorEmail(email);
+		log.info("[usuarioEmail], ", usuarioEmail);
+		Conteudo conteudo = detalhaConteudo(idConteudo);
+		Postagem post = detalhaPost(idPostagem);
+		post.pertenceAoConteudo(conteudo);
+		Comentario comentario = detalhaComentario(idComentario);
+		if (comentario.getStatus().equals(StatusRestritoConteudo.ATIVO)) {
+			throw APIException.build(HttpStatus.FORBIDDEN, "Comentário sensível não disponível!");
+		}
+		log.info("[finaliza] PostagemApplicationService - buscaComentarioPorId");
+		return ComentarioResponse.converte(comentario);
 	}
 
 }
