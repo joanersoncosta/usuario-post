@@ -44,42 +44,42 @@ public class PostagemInfraRepository implements PostagemRepository {
 
 	@Override
 	public List<Postagem> buscaTodosOsPostPorIdConteudo(UUID idConteudo) {
-		log.info("[start] ConteudoInfraRepository - buscaConteudoPorId");
+		log.info("[start] PostagemInfraRepository - buscaConteudoPorId");
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idConteudo").is(idConteudo).and("status").is(StatusRestritoConteudo.INAVITO));
 
 		List<Postagem> posts = mongoTemplate.find(query, Postagem.class);
-		log.info("[finish] ConteudoInfraRepository - buscaConteudoPorId");
+		log.info("[finish] PostagemInfraRepository - buscaConteudoPorId");
 		return posts;
 	}
 
 	@Override
 	public void deletaPost(Postagem post) {
-		log.info("[start] ConteudoInfraRepository - deletaPost");
+		log.info("[start] PostagemInfraRepository - deletaPost");
 		deletaComentariosAssociados(post);
 		postagemSpringDBMongoRepository.delete(post);
-		log.info("[finish] ConteudoInfraRepository - deletaPost");
+		log.info("[finish] PostagemInfraRepository - deletaPost");
 	}
 	
 	private void deletaComentariosAssociados(Postagem post) {
-		log.info("[start] ConteudoInfraRepository - deletaComentariosAssociados");
+		log.info("[start] PostagemInfraRepository - deletaComentariosAssociados");
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idPostagem").is(post.getIdPostagem()));
 
 		mongoTemplate.remove(query, Comentario.class);
-		log.info("[finish] ConteudoInfraRepository - deletaComentariosAssociados");
+		log.info("[finish] PostagemInfraRepository - deletaComentariosAssociados");
 	}
 
 	@Override
 	public void desativaTodosOsPosts(UUID idConteudo) {
-		log.info("[start] ConteudoInfraRepository - desativaTodosOsPosts");
+		log.info("[start] PostagemInfraRepository - desativaTodosOsPosts");
 		Query query = new Query();
 		query.addCriteria(Criteria.where("idConteudo").is(idConteudo).and("status").is(StatusRestritoConteudo.INAVITO));
 
 		Update update= new Update();
 		update.set("statusAtivacao", StatusAtivacaoPostagem.INATIVO);
 		mongoTemplate.updateFirst(query, update, Postagem.class);
-		log.info("[finish] ConteudoInfraRepository - desativaTodosOsPosts");
+		log.info("[finish] PostagemInfraRepository - desativaTodosOsPosts");
 	}
 
 }

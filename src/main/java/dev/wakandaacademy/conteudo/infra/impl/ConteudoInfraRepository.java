@@ -9,10 +9,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import dev.wakandaacademy.comentario.domain.Comentario;
 import dev.wakandaacademy.conteudo.application.repository.ConteudoRepository;
 import dev.wakandaacademy.conteudo.domain.Conteudo;
 import dev.wakandaacademy.conteudo.domain.enuns.StatusRestritoConteudo;
 import dev.wakandaacademy.conteudo.infra.ConteudoSpringDBMongoRepository;
+import dev.wakandaacademy.postagem.domain.Postagem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -65,8 +67,19 @@ public class ConteudoInfraRepository implements ConteudoRepository {
 	@Override
 	public void deletaConteudo(Conteudo conteudo) {
 		log.info("[start] ConteudoInfraRepository - salva");
+		deletaPostEComentariosAssociados(conteudo);
 		conteudoSpringDBMongoRepository.delete(conteudo);
 		log.info("[finish] ConteudoInfraRepository - salva");
+	}
+	
+	private void deletaPostEComentariosAssociados(Conteudo conteudo) {
+		log.info("[start] ConteudoInfraRepository - deletaComentariosAssociados");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idConteudo").is(conteudo.getIdConteudo()));
+
+		mongoTemplate.remove(query, Comentario.class);
+		mongoTemplate.remove(query, Postagem.class);
+		log.info("[finish] ConteudoInfraRepository - deletaComentariosAssociados");
 	}
 
 }

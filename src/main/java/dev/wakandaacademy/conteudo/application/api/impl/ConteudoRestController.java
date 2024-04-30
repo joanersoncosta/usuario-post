@@ -34,12 +34,12 @@ public class ConteudoRestController implements ConteudoAPI {
 	}
 	
 	private String getUsuarioByToken(String token) {
-		log.info("[inicia] ChamadoRestController - getUsuarioByToken");
+		log.info("[inicia] ConteudoRestController - getUsuarioByToken");
 		log.debug("[token] {}", token);
 		String emailUsuario = tokenService.getUsuarioByBearerToken(token)
 				.orElseThrow(() -> APIException.build(HttpStatus.UNAUTHORIZED, token));
 		log.info("[emailUsuario] {}", emailUsuario);
-		log.info("[finaliza] ChamadoRestController - getUsuarioByToken");
+		log.info("[finaliza] ConteudoRestController - getUsuarioByToken");
 		return emailUsuario;
 	}
 
