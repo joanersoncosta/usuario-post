@@ -73,7 +73,7 @@ public interface ComentarioAPI {
 
 	@PatchMapping(value = "/{idComentario}/conteudo/{idConteudo}/postagem/{idPostagem}/deslike")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	@Operation(summary = "Dar Like neste comentário")
+	@Operation(summary = "Dar Deslike neste comentário")
 	@SecurityRequirement(name = "Bearer Authentication")
 	void usuarioDeslikeComentario(@RequestHeader(name = "Authorization", required = true) String token, @PathVariable(value = "idPostagem") UUID idPostagem, @PathVariable(value = "idConteudo") UUID idConteudo, @PathVariable(value = "idComentario") UUID idComentario);
 
