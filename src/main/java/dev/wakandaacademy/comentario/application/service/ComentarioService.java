@@ -25,4 +25,6 @@ public interface ComentarioService {
 
 	void usuarioLikeComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
 
+	void usuarioDeslikeComentario(String email, UUID idPostagem, UUID idConteudo, UUID idComentario);
+
 }

@@ -97,5 +97,13 @@ public class ComentarioRestController implements ComentarioAPI {
 		log.info("[finaliza] ComentarioRestController - usuarioLikeComentario");
 	}
 
+	@Override
+	public void usuarioDeslikeComentario(String token, UUID idPostagem, UUID idConteudo, UUID idComentario) {
+		log.info("[inicia] ComentarioRestController - usuarioDeslikeComentario");
+		String email = getUsuarioByToken(token);
+		comentarioService.usuarioDeslikeComentario(email, idPostagem, idConteudo, idComentario);
+		log.info("[finaliza] ComentarioRestController - usuarioDeslikeComentario");
+	}
+
 
 }

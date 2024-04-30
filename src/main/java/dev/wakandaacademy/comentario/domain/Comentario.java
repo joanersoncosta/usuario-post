@@ -104,6 +104,22 @@ public class Comentario {
 		}
 	}
 	
+	public void deslikeComentario(Usuario usuarioEmail) {
+		ComentarioUsuarioDeslike deslikePostagem = deslikeUsuario(usuarioEmail);
+		ComentarioUsuarioLike likeExistente = likeUsuario(usuarioEmail);
+
+		if (likes.removeIf(like -> like.equals(likeExistente))) {
+			this.like--;
+		}
+
+		if (deslikes.removeIf(deslike -> deslike.equals(deslikePostagem))) {
+			this.deslike--;
+		} else {
+			deslikes.add(deslikePostagem);
+			this.deslike++;
+		}
+	}
+	
 	private ComentarioUsuarioLike likeUsuario(Usuario usuario) {
 		var likeUsuario = new ComentarioUsuarioLike(idConteudo);
 		return likeUsuario;
